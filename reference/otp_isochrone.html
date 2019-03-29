@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">opentripplanner</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1.0</span>
       </span>
     </div>
 
@@ -137,7 +137,7 @@
     </tr>
     <tr>
       <th>fromPlace</th>
-      <td><p>Numeric vector, Latitude/Longitude pair, e.g. `c(51.529258,-0.134649)`</p></td>
+      <td><p>Numeric vector, Longitude/Latitude pair, e.g. `c(-0.134649, 51.529258,)`</p></td>
     </tr>
     <tr>
       <th>mode</th>
@@ -187,8 +187,9 @@ each location.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='no'>isochrone1</span> <span class='kw'>&lt;-</span> <span class='fu'>otp_isochrone</span>(<span class='no'>otpcon</span>, <span class='kw'>fromPlace</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>51.5292</span>,-<span class='fl'>0.1346</span>))
-<span class='no'>isochrone2</span> <span class='kw'>&lt;-</span> <span class='fu'>otp_isochrone</span>(<span class='no'>otpcon</span>, <span class='kw'>fromPlace</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>51.5292</span>,-<span class='fl'>0.1346</span>), <span class='kw'>mode</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"WALK"</span>,<span class='st'>"TRANSIT"</span>), <span class='kw'>cutoffSec</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>600</span>,<span class='fl'>1200</span>,<span class='fl'>1800</span>))
+<span class='no'>isochrone1</span> <span class='kw'>&lt;-</span> <span class='fu'>otp_isochrone</span>(<span class='no'>otpcon</span>, <span class='kw'>fromPlace</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(-<span class='fl'>0.1346</span>,<span class='fl'>51.5292</span>))
+<span class='no'>isochrone2</span> <span class='kw'>&lt;-</span> <span class='fu'>otp_isochrone</span>(<span class='no'>otpcon</span>, <span class='kw'>fromPlace</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(-<span class='fl'>0.1346</span>,<span class='fl'>51.5292</span>),
+                            <span class='kw'>mode</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"WALK"</span>,<span class='st'>"TRANSIT"</span>), <span class='kw'>cutoffSec</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>600</span>,<span class='fl'>1200</span>,<span class='fl'>1800</span>))
 <span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

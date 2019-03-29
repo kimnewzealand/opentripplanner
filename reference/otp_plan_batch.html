@@ -32,7 +32,7 @@
 
 <meta property="og:title" content="Get multiple routes from the OTP — otp_plan_batch" />
 
-<meta property="og:description" content="Get multiple routes from the OTP" />
+<meta property="og:description" content="This fucntion is depreciated in favor of the new otp_plan which can do both single and batch routes" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">opentripplanner</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1.0</span>
       </span>
     </div>
 
@@ -119,11 +119,12 @@
 
     <div class="ref-description">
     
-    <p>Get multiple routes from the OTP</p>
+    <p>This fucntion is depreciated in favor of the new otp_plan which can do both single and batch routes</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>otp_plan_batch</span>(<span class='kw'>otpcon</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>fromPlace</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>toPlace</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>otp_plan_batch</span>(<span class='kw'>otpcon</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>fromPlace</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>toPlace</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -139,6 +140,10 @@
     <tr>
       <th>toPlace</th>
       <td><p>Numeric matrix of two columns, Latitude/Longitude pairs</p></td>
+    </tr>
+    <tr>
+      <th>ncores</th>
+      <td><p>numeric, number of cores to use in parallel processing, default is 1</p></td>
     </tr>
     <tr>
       <th>...</th>
