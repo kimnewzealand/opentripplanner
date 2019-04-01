@@ -43,6 +43,9 @@
   </a>
 </li>
 <li>
+  <a href="../articles/opentripplanner.html">Get started</a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -56,10 +59,7 @@
       <a href="../articles/advanced_features.html">Advanced Features</a>
     </li>
     <li>
-      <a href="../articles/dummies_guide.html">Dummies Guide</a>
-    </li>
-    <li>
-      <a href="../articles/getting_started.html">opentripplanner: getting started</a>
+      <a href="../articles/prerequisites.html">Prerequisites</a>
     </li>
   </ul>
 </li>
@@ -86,7 +86,7 @@
       <h1>Advanced Features</h1>
                         <h4 class="author">Malcolm Morgan</h4>
             
-            <h4 class="date">2019-03-29</h4>
+            <h4 class="date">2019-04-01</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ITSLeeds/opentripplanner/blob/master/vignettes/advanced_features.Rmd"><code>vignettes/advanced_features.Rmd</code></a></small>
       <div class="hidden name"><code>advanced_features.Rmd</code></div>
@@ -102,7 +102,7 @@
 <div id="recap" class="section level3">
 <h3 class="hasAnchor">
 <a href="#recap" class="anchor"></a>Recap</h3>
-<p>For this vignette, we will use the same data as the <code>getting_started</code> vignette. If you have not yet created the example graph you can set it up with the following commands. If you are using non-default settings see the <code>getting_started</code> vignette for full details.</p>
+<p>For this vignette, we will use the same data as the <a href="https://itsleeds.github.io/opentripplanner/articles/opentripplanner.html">Getting Started vignette</a> vignette. If you have not yet created the example graph you can set it up with the following commands. If you are using non-default settings see the Getting Started vignette for full details.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(opentripplanner)</a>
 <a class="sourceLine" id="cb1-2" data-line-number="2"><span class="co"># Path to a folder containing the OTP.jar file, change to where you saved the file.</span></a>
 <a class="sourceLine" id="cb1-3" data-line-number="3">path_otp &lt;-<span class="st"> "C:/Users/Public/otp.jar"</span></a>
@@ -112,54 +112,22 @@
 <a class="sourceLine" id="cb1-7" data-line-number="7">otpcon &lt;-<span class="st"> </span><span class="kw"><a href="../reference/otp_connect.html">otp_connect</a></span>()</a></code></pre></div>
 </div>
 </div>
-<div id="isochrones" class="section level2">
-<h2 class="hasAnchor">
-<a href="#isochrones" class="anchor"></a>Isochrones</h2>
-<p>Now that we have a working instance of OTP, we’ll use it to generate some travel-time isochrones. We are interested in visualising how long it takes to access Ryde ferry using public transport from different parts of the island. We will do this by requesting isochrones from OTP for 15, 30, 45, 60, 75 and 90 minutes. This can be achieved with a single function <code><a href="../reference/otp_isochrone.html">otp_isochrone()</a></code>.</p>
-<p>Isochrones requires the analyst extension to OTP.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">ferry_current  &lt;-<span class="st"> </span><span class="kw"><a href="../reference/otp_isochrone.html">otp_isochrone</a></span>(<span class="dt">otpcon =</span> otpcon,</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">            <span class="dt">fromPlace =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="fl">50.732429</span>, <span class="fl">-1.159494</span>), <span class="co"># latlong of Ryde ferry</span></a>
-<a class="sourceLine" id="cb2-3" data-line-number="3">            <span class="dt">mode =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"WALK"</span>,<span class="st">"TRANSIT"</span>),</a>
-<a class="sourceLine" id="cb2-4" data-line-number="4">            <span class="dt">maxWalkDistance =</span> <span class="dv">2000</span>,</a>
-<a class="sourceLine" id="cb2-5" data-line-number="5">            <span class="dt">date_time =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/as.POSIXlt">as.POSIXct</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/strptime">strptime</a></span>(<span class="st">"2018-06-03 13:30"</span>, <span class="st">"%Y-%m-%d %H:%M"</span>)),</a>
-<a class="sourceLine" id="cb2-6" data-line-number="6">            <span class="dt">cutoffSec =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">15</span>, <span class="dv">30</span>, <span class="dv">45</span>, <span class="dv">60</span>, <span class="dv">75</span>, <span class="dv">90</span>) <span class="op">*</span><span class="st"> </span><span class="dv">60</span> ) <span class="co"># Cut offs in seconds</span></a>
-<a class="sourceLine" id="cb2-7" data-line-number="7">ferry_current<span class="op">$</span>minutes =<span class="st"> </span>ferry_current<span class="op">$</span>time <span class="op">/</span><span class="st"> </span><span class="dv">60</span> <span class="co"># Convert back to minutes</span></a></code></pre></div>
-<p>We can visualise the isochrones on a map using the <code>tmap</code> package.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(tmap)                       <span class="co"># Load the tmap package</span></a>
-<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="kw">tmap_mode</span>(<span class="st">"view"</span>)                   <span class="co"># Set tmap to interative viewing</span></a>
-<a class="sourceLine" id="cb3-3" data-line-number="3">map &lt;-<span class="st"> </span><span class="kw">tm_shape</span>(ferry_current) <span class="op">+</span><span class="st">  </span><span class="co"># Build the map</span></a>
-<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="st">  </span><span class="kw">tm_fill</span>(<span class="st">"minutes"</span>,</a>
-<a class="sourceLine" id="cb3-5" data-line-number="5">          <span class="dt">breaks =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">0</span>, <span class="fl">15.001</span>, <span class="fl">30.001</span>, <span class="fl">45.001</span>, <span class="fl">60.001</span>, <span class="fl">75.001</span>, <span class="fl">90.001</span>),</a>
-<a class="sourceLine" id="cb3-6" data-line-number="6">          <span class="dt">style =</span> <span class="st">"fixed"</span>,</a>
-<a class="sourceLine" id="cb3-7" data-line-number="7">          <span class="dt">palette =</span> <span class="st">"-RdYlBu"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="st">  </span><span class="kw">tm_borders</span>()</a>
-<a class="sourceLine" id="cb3-9" data-line-number="9">map                                 <span class="co"># Plot the map</span></a></code></pre></div>
-<p>You should see a map like this.</p>
-<div class="figure" style="text-align: center">
-<img src="images/isochrone.jpg" alt="\label{fig:otpgui}Isochrones from Ryde ferry"><p class="caption">
-Isochrones from Ryde ferry
-</p>
-</div>
-</div>
 <div id="batch-routing" class="section level2">
 <h2 class="hasAnchor">
 <a href="#batch-routing" class="anchor"></a>Batch Routing</h2>
-<p>In this final part of the tutorial, we are going to automate querying the OTP API to generate large quantities of route data - potentially for many thousands of origin: destination pairs. In this example, we will gather data on travel times between each of the LSOAs in on the Isle of White and the Rye Ferry.</p>
-<p>To do this we will be using the <code>otp_route</code> function.</p>
-<p>We’ll start by importing the sample data</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">lsoa &lt;-<span class="st"> </span>sf<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/sf/topics/st_read">st_read</a></span>(<span class="st">"https://github.com/ITSLeeds/opentripplanner/releases/download/0.1/centroids.gpkg"</span>)</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(lsoa)</a></code></pre></div>
-<p><code>otp_plan</code> accepts three types of input for the <code>fromPlace</code> and <code>toPlace</code>: a numeric longitude/latitude pair; a 2 x m matrix where each row is a longitude/latitude pair; or an SF data.frame of only POINTS. The number of <code>fromPlace</code> and <code>toPlace</code> must be the same or equal one (in which case <code>otp_plan</code> will repeat the single location to match the length of the longer locations.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">toPlace &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="op">-</span><span class="fl">1.159494</span>,<span class="fl">50.732429</span>)</a></code></pre></div>
-<p>Alternatively, if you wished to route from every LSOA to every LSOA point this can easily be done by repeating the points. <strong>Warning</strong> routing from all points to all other point increases the total number of routes to calculate exponentially. In this case 89 points results in 89 x 89 = 7921 routes, this will take a while.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">toPlace   =<span class="st"> </span>lsoa[<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/rep">rep</a></span>(<span class="dv">1</span><span class="op">:</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/nrow">nrow</a></span>(lsoa), <span class="dt">times =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/nrow">nrow</a></span>(lsoa)),]</a>
-<a class="sourceLine" id="cb6-2" data-line-number="2">fromPlace =<span class="st"> </span>lsoa[<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/rep">rep</a></span>(<span class="dv">1</span><span class="op">:</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/nrow">nrow</a></span>(lsoa), <span class="dt">each  =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/nrow">nrow</a></span>(lsoa)),]</a></code></pre></div>
-<p>Now we can use the <code>otp_plan</code> to find the routes</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">routes &lt;-<span class="st"> </span><span class="kw"><a href="../reference/otp_plan.html">otp_plan</a></span>(<span class="dt">otpcon =</span> otpcon,</a>
-<a class="sourceLine" id="cb7-2" data-line-number="2">                    <span class="dt">fromPlace =</span> lsoa,</a>
-<a class="sourceLine" id="cb7-3" data-line-number="3">                    <span class="dt">toPlace =</span> toPlace)</a></code></pre></div>
-<p><strong>Note</strong> <code>otp_plan</code> supports multi-core processing via the <code>ncores</code> input. Runnin on <code>ncores = 2</code> provides around 35% performance boost. However, you are unlikely to get a significant improvement (on typical computers) using more than 3 cores, as you will overload OTP.</p>
-<p>You may get some error message returned as OTP is unable to find some of the routes. The <code>otp_plan</code> will skip over errors and return all the routes it can get. It will then print out any error messages. You will have also noticed the handy progress bar.</p>
+<p>The <code><a href="../reference/otp_plan.html">otp_plan()</a></code> function can produce multiple routes at once. In this example, we will gather data on travel times between each of the <a href="https://www.ons.gov.uk/methodology/geography/ukgeographies/censusgeography">LSOAs</a> on the Isle of White and the <a href="https://www.wightlink.co.uk/go/isle-of-wight-ferry-routes-destinations/">Ryde Ferry</a> .</p>
+<p><code><a href="../reference/otp_plan.html">otp_plan()</a></code> accepts three types of input for the <code>fromPlace</code> and <code>toPlace</code>: a numeric longitude/latitude pair; a 2 x m matrix where each row is a longitude/latitude pair; or an SF data.frame of only POINTS. The number of <code>fromPlace</code> and <code>toPlace</code> must be the same or equal one (in which case <code><a href="../reference/otp_plan.html">otp_plan()</a></code> will repeat the single location to match the length of the longer locations.</p>
+<p>We’ll start by importing the locations of the LSOA points.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">lsoa &lt;-<span class="st"> </span>sf<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/sf/topics/st_read">st_read</a></span>(<span class="st">"https://github.com/ITSLeeds/opentripplanner/releases/download/0.1/centroids.gpkg"</span>)</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(lsoa)</a></code></pre></div>
+<p>Then we will define our desitnation as the Ryde Ferry:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">toPlace &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="op">-</span><span class="fl">1.159494</span>,<span class="fl">50.732429</span>)</a></code></pre></div>
+<p>Now we can use the <code><a href="../reference/otp_plan.html">otp_plan()</a></code> to find the routes</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">routes &lt;-<span class="st"> </span><span class="kw"><a href="../reference/otp_plan.html">otp_plan</a></span>(<span class="dt">otpcon =</span> otpcon,</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">                    <span class="dt">fromPlace =</span> lsoa,</a>
+<a class="sourceLine" id="cb4-3" data-line-number="3">                    <span class="dt">toPlace =</span> toPlace)</a></code></pre></div>
+<p><strong>Note</strong> <code><a href="../reference/otp_plan.html">otp_plan()</a></code> supports multi-core processing via the <code>ncores</code> input. Runnin on <code>ncores = 2</code> provides around 35% performance boost. However, you are unlikely to get a significant improvement (on typical computers) using more than 3 cores, as you will overload OTP.</p>
+<p>You may get some error message returned as OTP is unable to find some of the routes. The <code><a href="../reference/otp_plan.html">otp_plan()</a></code> will skip over errors and return all the routes it can get. It will then print out any error messages. You will have also noticed the handy progress bar.</p>
 <p>You can plot the routes using <code>tmap</code></p>
 <p>If you do plot all the routes it should look something like this:</p>
 <div class="figure" style="text-align: center">
@@ -167,6 +135,71 @@ Isochrones from Ryde ferry
 Driving Routes to Rye Ferry
 </p>
 </div>
+<div id="all-to-all-routing" class="section level3">
+<h3 class="hasAnchor">
+<a href="#all-to-all-routing" class="anchor"></a>All to All routing</h3>
+<p>It is sometimes useful to find the route between every possible orign and desitantion for example when producing an OD matrix. If you wished to route from every LSOA to every other LSOA point this can easily be done by repeating the points.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">toPlace   =<span class="st"> </span>lsoa[<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/rep">rep</a></span>(<span class="dv">1</span><span class="op">:</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/nrow">nrow</a></span>(lsoa), <span class="dt">times =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/nrow">nrow</a></span>(lsoa)),]</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2">fromPlace =<span class="st"> </span>lsoa[<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/rep">rep</a></span>(<span class="dv">1</span><span class="op">:</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/nrow">nrow</a></span>(lsoa), <span class="dt">each  =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/nrow">nrow</a></span>(lsoa)),]</a></code></pre></div>
+<p><strong>Warning</strong> routing from all points to all other point increases the total number of routes to calculate exponentially. In this case 89 points results in 89 x 89 = 7921 routes, this will take a while.</p>
+<p>For and OD matrix you may only be intrested in the total travel time and not require the route geometry. By setting <code>get_geometry = FALSE</code> in <code><a href="../reference/otp_plan.html">otp_plan()</a></code> R will just return the meta-data and discard the geometry. This is slightly faster than when using <code>get_geometry = TRUE</code> and uses less memory.</p>
+</div>
+</div>
+<div id="isochrones" class="section level2">
+<h2 class="hasAnchor">
+<a href="#isochrones" class="anchor"></a>Isochrones</h2>
+<p>Isochones a lines of equal time. Suppose we are interested in visualising how long it takes to access Ryde ferry using public transport from different parts of the island. We will do this by requesting isochrones from OTP for 15, 30, 45, 60, 75 and 90 minutes. This can be achieved with a single function <code><a href="../reference/otp_isochrone.html">otp_isochrone()</a></code>.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">ferry_current  &lt;-<span class="st"> </span><span class="kw"><a href="../reference/otp_isochrone.html">otp_isochrone</a></span>(<span class="dt">otpcon =</span> otpcon,</a>
+<a class="sourceLine" id="cb6-2" data-line-number="2">            <span class="dt">fromPlace =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="op">-</span><span class="fl">1.159494</span>, <span class="fl">50.732429</span>), <span class="co"># lng/lat of Ryde ferry</span></a>
+<a class="sourceLine" id="cb6-3" data-line-number="3">            <span class="dt">mode =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"WALK"</span>,<span class="st">"TRANSIT"</span>),</a>
+<a class="sourceLine" id="cb6-4" data-line-number="4">            <span class="dt">maxWalkDistance =</span> <span class="dv">2000</span>,</a>
+<a class="sourceLine" id="cb6-5" data-line-number="5">            <span class="dt">date_time =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/as.POSIXlt">as.POSIXct</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/strptime">strptime</a></span>(<span class="st">"2018-06-03 13:30"</span>, <span class="st">"%Y-%m-%d %H:%M"</span>)),</a>
+<a class="sourceLine" id="cb6-6" data-line-number="6">            <span class="dt">cutoffSec =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">15</span>, <span class="dv">30</span>, <span class="dv">45</span>, <span class="dv">60</span>, <span class="dv">75</span>, <span class="dv">90</span>) <span class="op">*</span><span class="st"> </span><span class="dv">60</span> ) <span class="co"># Cut offs in seconds</span></a>
+<a class="sourceLine" id="cb6-7" data-line-number="7">ferry_current<span class="op">$</span>minutes =<span class="st"> </span>ferry_current<span class="op">$</span>time <span class="op">/</span><span class="st"> </span><span class="dv">60</span> <span class="co"># Convert back to minutes</span></a></code></pre></div>
+<p>We can visualise the isochrones on a map using the <code>tmap</code> package.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(tmap)                       <span class="co"># Load the tmap package</span></a>
+<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="kw">tmap_mode</span>(<span class="st">"view"</span>)                   <span class="co"># Set tmap to interative viewing</span></a>
+<a class="sourceLine" id="cb7-3" data-line-number="3">map &lt;-<span class="st"> </span><span class="kw">tm_shape</span>(ferry_current) <span class="op">+</span><span class="st">  </span><span class="co"># Build the map</span></a>
+<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="st">  </span><span class="kw">tm_fill</span>(<span class="st">"minutes"</span>,</a>
+<a class="sourceLine" id="cb7-5" data-line-number="5">          <span class="dt">breaks =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">0</span>, <span class="fl">15.001</span>, <span class="fl">30.001</span>, <span class="fl">45.001</span>, <span class="fl">60.001</span>, <span class="fl">75.001</span>, <span class="fl">90.001</span>),</a>
+<a class="sourceLine" id="cb7-6" data-line-number="6">          <span class="dt">style =</span> <span class="st">"fixed"</span>,</a>
+<a class="sourceLine" id="cb7-7" data-line-number="7">          <span class="dt">palette =</span> <span class="st">"-RdYlBu"</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb7-8" data-line-number="8"><span class="st">  </span><span class="kw">tm_borders</span>()</a>
+<a class="sourceLine" id="cb7-9" data-line-number="9">map                                 <span class="co"># Plot the map</span></a></code></pre></div>
+<p>You should see a map like this.</p>
+<div class="figure" style="text-align: center">
+<img src="images/isochrone.jpg" alt="\label{fig:otpgui}Isochrones from Ryde ferry"><p class="caption">
+Isochrones from Ryde ferry
+</p>
+</div>
+</div>
+<div id="geo-coding" class="section level2">
+<h2 class="hasAnchor">
+<a href="#geo-coding" class="anchor"></a>Geo-coding</h2>
+<p>OTP has a built in geo-coder to allow you to search for places by names.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">stations &lt;-<span class="st"> </span><span class="kw"><a href="../reference/otp_geocode.html">otp_geocode</a></span>(<span class="dt">otpcon =</span> otpcon, <span class="dt">query =</span> <span class="st">"station"</span>)</a>
+<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(stations)</a></code></pre></div>
+</div>
+<div id="debug-layers" class="section level2">
+<h2 class="hasAnchor">
+<a href="#debug-layers" class="anchor"></a>Debug Layers</h2>
+<p>For troubleshooting routing issues, you can visualise the traversal permissions of street edges, the bike safety of edges, and how transit stops are linked to streets. For these additional debug layers to be available, add <code>?debug_layers=true</code> to the URL, like this: <a href="http://localhost:8080?debug_layers=true" class="uri">http://localhost:8080?debug_layers=true</a>. The extra layers will be listed in the layer stack menu.</p>
+<p>You can read more about the different debug layers in the official OTP documentation: <a href="http://docs.opentripplanner.org/en/latest/Troubleshooting-Routing/#debug-layers" class="uri">http://docs.opentripplanner.org/en/latest/Troubleshooting-Routing/#debug-layers</a>.</p>
+</div>
+<div id="configuring-open-trip-planner" class="section level2">
+<h2 class="hasAnchor">
+<a href="#configuring-open-trip-planner" class="anchor"></a>Configuring Open Trip Planner</h2>
+<p>How OTP works can be configures using json files. <code>build-config.json</code> is used during graph building (i.e. <code><a href="../reference/otp_build_graph.html">otp_build_graph()</a></code>). While <code>router-config.json</code> is used during setup (i.e. <code><a href="../reference/otp_setup.html">otp_setup()</a></code>). These files must be saved with the rest of your data and each router can have a unique configuration.</p>
+<p>To help configure OTP there are several useful functions. <code><a href="../reference/otp_make_config.html">otp_make_config()</a></code> makes a default config object and fills it with default values. It is simply a named list, so you can eaily modify the values. <code><a href="../reference/otp_validate_config.html">otp_validate_config()</a></code> does basic checks on a config object to make sure it is valid. Finally <code><a href="../reference/otp_write_config.html">otp_write_config()</a></code> exports the config object as a properly formatted json file.</p>
+<p>A simple example of chaing the default walking speed.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">router_config &lt;-<span class="st"> </span><span class="kw"><a href="../reference/otp_make_config.html">otp_make_config</a></span>(<span class="st">"router"</span>)     <span class="co"># Make a config object</span></a>
+<a class="sourceLine" id="cb9-2" data-line-number="2">router_config<span class="op">$</span>routingDefaults<span class="op">$</span>walkSpeed        <span class="co"># Currently 1.34 m/s</span></a>
+<a class="sourceLine" id="cb9-3" data-line-number="3">router_config<span class="op">$</span>routingDefaults<span class="op">$</span>walkSpeed &lt;-<span class="st"> </span><span class="fl">1.5</span> <span class="co"># Increase the walking speed</span></a>
+<a class="sourceLine" id="cb9-4" data-line-number="4"><span class="kw"><a href="../reference/otp_validate_config.html">otp_validate_config</a></span>(router_config)             <span class="co"># Check the new config is valid</span></a>
+<a class="sourceLine" id="cb9-5" data-line-number="5"><span class="kw"><a href="../reference/otp_write_config.html">otp_write_config</a></span>(router_config,                <span class="co"># Save the config file</span></a>
+<a class="sourceLine" id="cb9-6" data-line-number="6">                 <span class="dt">dir =</span> data_path,</a>
+<a class="sourceLine" id="cb9-7" data-line-number="7">                 <span class="dt">router =</span> <span class="st">"default"</span>)</a></code></pre></div>
+<p>There is much more information about configuring Open Trip Planner at <a href="https://opentripplanner.readthedocs.io/en/latest/Configuration/" class="uri">https://opentripplanner.readthedocs.io/en/latest/Configuration/</a></p>
 </div>
   </div>
 
@@ -176,8 +209,11 @@ Driving Routes to Rye Ferry
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
 <li><a href="#introduction">Introduction</a></li>
-      <li><a href="#isochrones">Isochrones</a></li>
       <li><a href="#batch-routing">Batch Routing</a></li>
+      <li><a href="#isochrones">Isochrones</a></li>
+      <li><a href="#geo-coding">Geo-coding</a></li>
+      <li><a href="#debug-layers">Debug Layers</a></li>
+      <li><a href="#configuring-open-trip-planner">Configuring Open Trip Planner</a></li>
       </ul>
 </div>
       </div>
