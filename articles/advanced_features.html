@@ -127,7 +127,7 @@
 <a class="sourceLine" id="cb4-2" data-line-number="2">                    <span class="dt">fromPlace =</span> lsoa,</a>
 <a class="sourceLine" id="cb4-3" data-line-number="3">                    <span class="dt">toPlace =</span> toPlace)</a></code></pre></div>
 <p><strong>Note</strong> <code><a href="../reference/otp_plan.html">otp_plan()</a></code> supports multi-core processing via the <code>ncores</code> input. Runnin on <code>ncores = 2</code> provides around 35% performance boost. However, you are unlikely to get a significant improvement (on typical computers) using more than 3 cores, as you will overload OTP.</p>
-<p>You may get some error message returned as OTP is unable to find some of the routes. The <code><a href="../reference/otp_plan.html">otp_plan()</a></code> will skip over errors and return all the routes it can get. It will then print out any error messages. You will have also noticed the handy progress bar.</p>
+<p>You may get some error message returned as OTP is unable to find some of the routes. The <code><a href="../reference/otp_plan.html">otp_plan()</a></code> will skip over errors and return all the routes it can get. It will then return any error messages. You will have also noticed the handy progress bar.</p>
 <p>You can plot the routes using <code>tmap</code></p>
 <p>If you do plot all the routes it should look something like this:</p>
 <div class="figure" style="text-align: center">

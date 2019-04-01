@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Stop and OTP Instance — otp_stop • opentripplanner</title>
+<title>Open Trip Planner of R — opentripplanner-package • opentripplanner</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,11 +30,11 @@
 
 
 
-<meta property="og:title" content="Stop and OTP Instance — otp_stop" />
+<meta property="og:title" content="Open Trip Planner of R — opentripplanner-package" />
 
-<meta property="og:description" content="OTP is run in Java and requires Java commands to be typed into the command line.
-The function allows the parameters to be defined in R and automatically passed to Java.
-This function stops an already running OTP instance" />
+<meta property="og:description" content="The goal of Open Trip Planner for R is to provide a simple R interface to Open Trip Planner (OTP).
+The OTP is a multimodal trip planning service. OTP is written in Java, and you will need both Java
+and R to use this package." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -119,55 +119,48 @@ This function stops an already running OTP instance" />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Stop and OTP Instance</h1>
-    <small class="dont-index">Source: <a href='https://github.com/ITSLeeds/opentripplanner/blob/master/R/otp-setup.R'><code>R/otp-setup.R</code></a></small>
-    <div class="hidden name"><code>otp_stop.Rd</code></div>
+    <h1>Open Trip Planner of R</h1>
+    <small class="dont-index">Source: <a href='https://github.com/ITSLeeds/opentripplanner/blob/master/R/opentripplanner-package.R'><code>R/opentripplanner-package.R</code></a></small>
+    <div class="hidden name"><code>opentripplanner-package.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>OTP is run in Java and requires Java commands to be typed into the command line.
-The function allows the parameters to be defined in R and automatically passed to Java.
-This function stops an already running OTP instance</p>
+    <p>The goal of Open Trip Planner for R is to provide a simple R interface to Open Trip Planner (OTP).
+The OTP is a multimodal trip planning service. OTP is written in Java, and you will need both Java
+and R to use this package.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>otp_stop</span>()</pre>
         
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>This function return a message but no object</p>
-    
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>The function assumes you have run otp_setup()</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other setup: <code><a href='otp_build_graph.html'>otp_build_graph</a></code>,
-  <code><a href='otp_setup.html'>otp_setup</a></code></p></div>
+    <div class='dont-index'><p>Useful links:</p><ul>
+<li><p><a href='https://github.com/ITSLeeds/opentripplanner'>https://github.com/ITSLeeds/opentripplanner</a></p></li>
+<li><p><a href='https://itsleeds.github.io/opentripplanner/'>https://itsleeds.github.io/opentripplanner/</a></p></li>
+<li><p>Report bugs at <a href='https://github.com/ITSLeeds/opentripplanner/issues'>https://github.com/ITSLeeds/opentripplanner/issues</a></p></li>
+</ul></div>
     
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"># NOT RUN {
-otp_stop()
-This will force Java to close, Press [enter] to continue, [escape] to abort
-# }
-<div class='input'>
-</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       
-      <li><a href="#value">Value</a></li>
-
-      <li><a href="#details">Details</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
+          </ul>
+
+    <h2>Author</h2>
+    <p><strong>Maintainer</strong>: Marcus Young <a href='mailto:M.A.Young@soton.ac.uk'>M.A.Young@soton.ac.uk</a> (0000-0003-4627-1116)</p>
+<p>Authors:</p><ul>
+<li><p>Malcolm Morgan <a href='mailto:m.morgan1@leeds.ac.uk'>m.morgan1@leeds.ac.uk</a> (0000-0002-9488-9183)</p></li>
+</ul>
+
+<p>Other contributors:</p><ul>
+<li><p>Robin Lovelace <a href='mailto:rob00x@gmail.com'>rob00x@gmail.com</a> (0000-0001-5679-6536) [contributor]</p></li>
+<li><p>Layik Hama <a href='mailto:layik.hama@gmail.com'>layik.hama@gmail.com</a> (0000-0003-1912-4890) [contributor]</p></li>
+</ul>
+
 
   </div>
 </div>
