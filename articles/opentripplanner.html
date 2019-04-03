@@ -99,12 +99,12 @@
 <h2 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h2>
 <p>This vignette is an introduction to OpenTripPlanner (OTP) - an open-source and cross-platform multi-modal route planner written in JAVA. It uses imported Open Street Map (OSM) data for routing on the street and path network and supports multi-agency public transport routing through imported GTFS feeds. It can also apply a digital elevation model to the OSM street network, allowing, for example, cycle-friendly routes to be requested. OTP has a web front-end that can be used by end-users and a sophisticated routing API.</p>
-<p>A major advantage of running your own multi-modal route planner is the ability to carry out analysis using amended transport data. Services such as Google Maps or TransportAPI are based on current public transport schedules and the existing road network. OTP enables you to modify transit schedules and/or make changes to the underlying street network. By editing a local copy of OSM, you can model the effects of opening new roads, closing roads, or imposing other restrictions. You can also look back in time. For example, you might want to examine the effect of reductions in rural bus services on the accessibility of health facilities. To do this you would need a network with bus schedules as they were in previous years.</p>
+<p>A major advantage of running your own multi-modal route planner is the ability to carry out analysis using amended transport data. Services such as Google Maps or TransportAPI are based on current public transport schedules and the existing road network. OTP enables you to modify transit schedules and/or make changes to the underlying street network. By editing a local copy of OSM, you can model the effects of opening new roads, closing roads or imposing other restrictions. You can also look back in time. For example, you might want to examine the effect of reductions in rural bus services on the accessibility of health facilities. To do this you would need a network with bus schedules as they were in previous years.</p>
 </div>
 <div id="prerequisites" class="section level2">
 <h2 class="hasAnchor">
 <a href="#prerequisites" class="anchor"></a>Prerequisites</h2>
-<p>You will need to have installed R, RStudio, and Java 8. For more details on the software required see the <a href="https://itsleeds.github.io/opentripplanner/articles/prerequisites.html">prerequisites vignette</a> included with this package.</p>
+<p>You will need to have installed R, RStudio, and Java 8. For more details on the required software see the <a href="https://itsleeds.github.io/opentripplanner/articles/prerequisites.html">prerequisites vignette</a> included with this package.</p>
 </div>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
@@ -126,7 +126,7 @@
 <div id="building-an-otp-graph" class="section level2">
 <h2 class="hasAnchor">
 <a href="#building-an-otp-graph" class="anchor"></a>Building an OTP Graph</h2>
-<p>We will build an example graph for the Isle of Wight using some example data provided for the package. A graph is what OTP uses to find routes, and must be built out of the raw data provided. First we will download the sample data and put it in the folder structure that OTP expects.</p>
+<p>We will build an example graph for the Isle of Wight using some example data provided for the package. A graph is what OTP uses to find routes, and must be built out of the raw data provided. First, we will download the sample data and put it in the folder structure that OTP expects.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co"># Path to the sample data</span></a>
 <a class="sourceLine" id="cb3-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/files2">dir.create</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/file.path">file.path</a></span>(path_data,<span class="st">"graphs"</span>)) <span class="co"># create a folder structure for the data</span></a>
 <a class="sourceLine" id="cb3-3" data-line-number="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/files2">dir.create</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/file.path">file.path</a></span>(path_data,<span class="st">"graphs"</span>,<span class="st">"default"</span>))</a>
@@ -178,7 +178,7 @@ OTP Web GUI
 <p>Now you have the OTP running on your computer you can let R connect to the OTP.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">otpcon &lt;-<span class="st"> </span><span class="kw"><a href="../reference/otp_connect.html">otp_connect</a></span>()</a></code></pre></div>
 <p>The connection is created and tested, a message will be returned saying if the connection exists or not.</p>
-<p>If you have not used the default settings, such as a different <code>port</code> you can speficy those settings in <code><a href="../reference/otp_connect.html">otp_connect()</a></code></p>
+<p>If you have not used the default settings, such as a different <code>port</code> you can specify those settings in <code><a href="../reference/otp_connect.html">otp_connect()</a></code></p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">otpcon &lt;-<span class="st"> </span><span class="kw"><a href="../reference/otp_connect.html">otp_connect</a></span>(<span class="dt">hostname =</span>  <span class="st">"localhost"</span>, <span class="dt">router =</span> <span class="st">"default"</span>, <span class="dt">port =</span> <span class="dv">8801</span>)</a></code></pre></div>
 <p><code><a href="../reference/otp_connect.html">otp_connect()</a></code> creates an OTP connection object which will allow R to connect to the OTP.</p>
 </div>
@@ -197,7 +197,7 @@ OTP Web GUI
 <div id="stopping-the-otp" class="section level2">
 <h2 class="hasAnchor">
 <a href="#stopping-the-otp" class="anchor"></a>Stopping the OTP</h2>
-<p>As the OTP is running in Java it will conitune to run after you close R.</p>
+<p>As the OTP is running in Java it will continue to run after you close R.</p>
 <p>You can stop the OTP running using the command. <strong>NOTE: This will stop all running JAVA applications!</strong></p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw"><a href="../reference/otp_stop.html">otp_stop</a></span>()</a></code></pre></div>
 <p>Congratulations, you now have your own multi-modal router planner!</p>

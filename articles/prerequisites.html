@@ -98,7 +98,7 @@
 <div id="introduction" class="section level2">
 <h2 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h2>
-<p>This vignette provides guidance for people who new to OpenTripPlanner (OTP) and R. After you have R and OTP installed, and have become familiar with them (e.g. by reading this vignettee), we recommend working through <a href="https://itsleeds.github.io/opentripplanner/articles/opentripplanner.html">Getting Started vignette</a>.</p>
+<p>This vignette provides guidance for people who new to OpenTripPlanner (OTP) and R. After you have R and OTP installed and have become familiar with them (e.g. by reading this vignette), we recommend working through <a href="https://itsleeds.github.io/opentripplanner/articles/opentripplanner.html">Getting Started vignette</a>.</p>
 </div>
 <div id="what-is-this-package-for-and-what-is-a-package-anyway" class="section level2">
 <h2 class="hasAnchor">
@@ -133,7 +133,7 @@
 <div id="why-would-i-want-to-use-opentripplanner-for-r" class="section level3">
 <h3 class="hasAnchor">
 <a href="#why-would-i-want-to-use-opentripplanner-for-r" class="anchor"></a>Why would I want to use OpenTripPlanner for R?</h3>
-<p>OTP can be used to run public route finding services such as <a href="https://ride.trimet.org" class="uri">https://ride.trimet.org</a> but it can also be run on your own private computer or server. If you want to analyse a transport network OTP is a very useful tool. However, OTP is, as the name suggests, a Trip Planner, not analytical software. So, while OTP can find the fastest route from A to B or find all the places that are within a 20-minute walk of C, it cannot answer a question like “how many people live within 10-minutes of a park?” This is where R can help. R can process multiple spatial datasets such a population densities and park locations, but does not have a built-in journey planner.</p>
+<p>OTP can be used to run public route finding services such as <a href="https://ride.trimet.org" class="uri">https://ride.trimet.org</a> but it can also be run on your own private computer or server. If you want to analyse a transport network OTP is a very useful tool. However, OTP is, as the name suggests, a Trip Planner, not analytical software. So, while OTP can find the fastest route from A to B or find all the places that are within a 20-minute walk of C, it cannot answer a question like “how many people live within 10-minutes of a park?” This is where R can help. R can process multiple spatial datasets such as population densities and park locations but does not have a built-in journey planner.</p>
 <p>This package allows you to use the trip planning power of OTP with the analytical might of R.</p>
 </div>
 </div>
@@ -159,7 +159,11 @@
 <div id="learning-r" class="section level3">
 <h3 class="hasAnchor">
 <a href="#learning-r" class="anchor"></a>Learning R</h3>
-<p>If you have never used R before there a lots of free tutorials to get you started, such as: * <a href="https://www.datacamp.com/courses/free-introduction-to-r" class="uri">https://www.datacamp.com/courses/free-introduction-to-r</a> * <a href="http://www.r-tutor.com/r-introduction" class="uri">http://www.r-tutor.com/r-introduction</a></p>
+<p>If you have never used R before there are lots of free tutorials to get you started, such as:</p>
+<ul>
+<li><a href="https://www.datacamp.com/courses/free-introduction-to-r" class="uri">https://www.datacamp.com/courses/free-introduction-to-r</a></li>
+<li><a href="http://www.r-tutor.com/r-introduction" class="uri">http://www.r-tutor.com/r-introduction</a></li>
+</ul>
 </div>
 <div id="to-use-otp" class="section level3">
 <h3 class="hasAnchor">
@@ -167,7 +171,7 @@
 <ul>
 <li>Download free Java 8 from <a href="https://www.java.com/en/download/" class="uri">https://www.java.com/en/download/</a> and install Java. You will need the correct version for your operating system. If possible the 64 Bit version of Java is preferable, especially if you want to use OTP over large areas.</li>
 </ul>
-<p><strong>Note</strong> OTP does not work with later version of Java such as Java 11.</p>
+<p><strong>Note</strong> OTP does not work with later versions of Java such as Java 11.</p>
 <p>To install Java 8 on Linux, we recommend instructions at <a href="https://medium.com/coderscorner/installing-oracle-java-8-in-ubuntu-16-10-845507b13343">medium.com/coderscorner</a> and on <a href="https://askubuntu.com/questions/740757/switch-between-multiple-java-versions">StackOverflow</a>.</p>
 <p>You can also compile the latest version of OTP from source, as outlined at <a href="http://docs.opentripplanner.org/en/latest/Getting-OTP/">docs.opentripplanner.org/</a>.</p>
 </div>
@@ -190,31 +194,30 @@
 <a class="sourceLine" id="cb1-12" data-line-number="12"><span class="kw"><a href="../reference/otp_setup.html">otp_setup</a></span>(<span class="dt">otp =</span> path_otp, <span class="dt">dir =</span> path_data)</a>
 <a class="sourceLine" id="cb1-13" data-line-number="13"><span class="kw"><a href="../reference/otp_stop.html">otp_stop</a></span>()</a></code></pre></div>
 </div>
+<div id="getting-data-for-otp" class="section level2">
+<h2 class="hasAnchor">
+<a href="#getting-data-for-otp" class="anchor"></a>Getting Data for OTP</h2>
+<p>To use OTP on your local computer you will need data about your location of intrest, such as where the roads are, what is the public transport timetable etc.</p>
+<div id="road-map-data" class="section level3">
+<h3 class="hasAnchor">
+<a href="#road-map-data" class="anchor"></a>Road Map Data</h3>
+<p>OTP uses road maps from the <a href="https://www.openstreetmap.org">Open Street Map (OSM)</a> in the .pbf format. OSM is a free map that anybody can edit. You can download all or part of the OSM from <a href="https://download.geofabrik.de/">Geofabrik</a>.</p>
+</div>
+<div id="public-transport-timetables" class="section level3">
+<h3 class="hasAnchor">
+<a href="#public-transport-timetables" class="anchor"></a>Public Transport Timetables</h3>
+<p>OTP can use public transport timetable data in the <a href="https://developers.google.com/transit/gtfs/">GFTS format</a>. You can find GTFS data for many regions at <a href="https://transit.land/">transitland</a>.</p>
+</div>
+<div id="elevation-data" class="section level3">
+<h3 class="hasAnchor">
+<a href="#elevation-data" class="anchor"></a>Elevation Data</h3>
+<p>You can add terrain information to your routes, especially useful for walking and cycling using GeoTIFF images. You can find worldwide elevation data at <a href="https://www2.jpl.nasa.gov/srtm/" class="uri">https://www2.jpl.nasa.gov/srtm/</a>.</p>
+</div>
+</div>
 <div id="next-steps" class="section level2">
 <h2 class="hasAnchor">
 <a href="#next-steps" class="anchor"></a>Next Steps</h2>
 <p>Now that you have installed Java and R go to the <a href="https://itsleeds.github.io/opentripplanner/articles/opentripplanner.html">Getting Started vignette</a>, to find how to install the package, create a graph, and use it to plan trips. Some sample data for the Isle of Wight is provided on the GitHub page for this package <a href="https://github.com/ITSLeeds/opentripplanner/releases/tag/0.1" class="uri">https://github.com/ITSLeeds/opentripplanner/releases/tag/0.1</a></p>
-<p>You might also intrested in:</p>
-<div id="getting-data-for-otp" class="section level3">
-<h3 class="hasAnchor">
-<a href="#getting-data-for-otp" class="anchor"></a>Getting Data for OTP</h3>
-<p>To plan a trip OTP need data about the location, such as where the roads are, what is the public transport timetable etc.</p>
-<div id="road-map-data" class="section level4">
-<h4 class="hasAnchor">
-<a href="#road-map-data" class="anchor"></a>Road Map Data</h4>
-<p>OTP uses road maps from the Open Street Map (OSM) <a href="https://www.openstreetmap.org" class="uri">https://www.openstreetmap.org</a> in the .pbf format. OSM is a free map that anybody can edit. You can download all of part of the OSM from <a href="https://download.geofabrik.de/" class="uri">https://download.geofabrik.de/</a>.</p>
-</div>
-<div id="public-transport-timetables" class="section level4">
-<h4 class="hasAnchor">
-<a href="#public-transport-timetables" class="anchor"></a>Public Transport Timetables</h4>
-<p>OTP can use public transport timetable data in the GFTS format. You can find GTFS data for many regions at <a href="https://transit.land/" class="uri">https://transit.land/</a></p>
-</div>
-<div id="elevation-data" class="section level4">
-<h4 class="hasAnchor">
-<a href="#elevation-data" class="anchor"></a>Elevation Data</h4>
-<p>You can add terrain infromation to your routes, especially useful for walking and cycling using GeoTIFF images. You can find world wide elevation data at <a href="https://www2.jpl.nasa.gov/srtm/" class="uri">https://www2.jpl.nasa.gov/srtm/</a> .</p>
-</div>
-</div>
 </div>
   </div>
 
@@ -227,6 +230,7 @@
       <li><a href="#what-is-this-package-for-and-what-is-a-package-anyway">What is this package for, and what is a package anyway?</a></li>
       <li><a href="#what-do-i-need-to-get-started">What do I need to get started?</a></li>
       <li><a href="#check-the-installation">Check the installation</a></li>
+      <li><a href="#getting-data-for-otp">Getting Data for OTP</a></li>
       <li><a href="#next-steps">Next Steps</a></li>
       </ul>
 </div>

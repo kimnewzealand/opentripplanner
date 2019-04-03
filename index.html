@@ -89,14 +89,13 @@
 
     
     
-
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+
 <div id="opentripplanner-for-r" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#opentripplanner-for-r" class="anchor"></a>OpenTripPlanner for R</h1></div>
-<p>The goal of OpenTripPlanner for R is to provide a simple R interface to <a href="https://www.opentripplanner.org/">OpenTripPlanner (OTP)</a>. The OTP is a multimodal trip planning service. OTP is written in Java, and you will need both Java and R to use this package.</p>
-<p>This package can be used to interface with a remote instance of OTP (e.g. a website) or help you set up and manage a local version of OTP for private use. For more information on what OTP is, see the <a href="https://itsleeds.github.io/opentripplanner/articles/prerequisites.html">Prerequisites vignette</a>.</p>
-<p>Basic setup and routing functions are outlined in the <a href="https://itsleeds.github.io/opentripplanner/articles/opentripplanner.html">getting started vignette</a>, while advanced fucntionality such as batch routing, isochones, and customised setup is described in the <a href="https://itsleeds.github.io/opentripplanner/articles/advanced_features.html">advanced features vignette</a></p>
+<p>The goal of OpenTripPlanner for R is to provide a simple R interface to <a href="https://www.opentripplanner.org/">OpenTripPlanner (OTP)</a>. The OTP is a multimodal trip planning service written in Java. For more information on what OTP is, see the <a href="https://itsleeds.github.io/opentripplanner/articles/prerequisites.html">prerequisites vignette</a>.</p>
+<p>This package can be used to interface with a remote instance of OTP (e.g. a website) or help you set up and manage a local version of OTP for private use. Basic setup and routing functions are outlined in the <a href="https://itsleeds.github.io/opentripplanner/articles/opentripplanner.html">getting started vignette</a>, while advanced functionality such as batch routing, isochrones, and customised setup is described in the <a href="https://itsleeds.github.io/opentripplanner/articles/advanced_features.html">advanced features vignette</a></p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
@@ -122,11 +121,12 @@
 <li>
 <code><a href="reference/otp_build_graph.html">otp_build_graph()</a></code> To make a OTP graph from raw data</li>
 <li>
-<code><a href="reference/otp_setup.html">otp_setup()</a></code> To star up a local instance of OTP</li>
+<code><a href="reference/otp_setup.html">otp_setup()</a></code> To start up a local instance of OTP</li>
 </ol>
 <p>Functions for connecting to a local or remote instance of OTP:</p>
 <ol style="list-style-type: decimal">
-<li><code><a href="reference/otp_connect.html">otp_connect()</a></code></li>
+<li>
+<code><a href="reference/otp_connect.html">otp_connect()</a></code> To connect to OTP</li>
 </ol>
 <p>Functions for retrieving data from OTP:</p>
 <ol style="list-style-type: decimal">
@@ -143,8 +143,7 @@
 <h2 class="hasAnchor">
 <a href="#tests" class="anchor"></a>Tests</h2>
 <p>As this package does not work without a working connection to OTP, tests only run on machines that have the environment variable <code>I_have_OTP</code> with the value <code>TRUE</code>. You can add this with <code><a href="https://www.rdocumentation.org/packages/usethis/topics/edit">usethis::edit_r_environ()</a></code>.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Sys.getenv">Sys.getenv</a></span>(<span class="st">"I_have_OTP"</span>)</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="co">#&gt; [1] ""</span></a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Sys.getenv">Sys.getenv</a></span>(<span class="st">"I_have_OTP"</span>)</a></code></pre></div>
 </div>
 <div id="acknowledgement" class="section level2">
 <h2 class="hasAnchor">
