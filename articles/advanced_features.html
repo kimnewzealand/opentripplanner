@@ -120,7 +120,7 @@
 <p>We’ll start by importing the locations of the LSOA points.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">lsoa &lt;-<span class="st"> </span>sf<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/sf/topics/st_read">st_read</a></span>(<span class="st">"https://github.com/ITSLeeds/opentripplanner/releases/download/0.1/centroids.gpkg"</span>)</a>
 <a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(lsoa)</a></code></pre></div>
-<p>Then we will define our desitnation as the Ryde Ferry:</p>
+<p>Then we will define our destination as the Ryde Ferry:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">toPlace &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="op">-</span><span class="fl">1.159494</span>,<span class="fl">50.732429</span>)</a></code></pre></div>
 <p>Now we can use the <code><a href="../reference/otp_plan.html">otp_plan()</a></code> to find the routes</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">routes &lt;-<span class="st"> </span><span class="kw"><a href="../reference/otp_plan.html">otp_plan</a></span>(<span class="dt">otpcon =</span> otpcon,</a>
