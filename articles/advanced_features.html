@@ -86,7 +86,7 @@
       <h1>Advanced Features</h1>
                         <h4 class="author">Malcolm Morgan</h4>
             
-            <h4 class="date">2019-04-02</h4>
+            <h4 class="date">2019-04-03</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ITSLeeds/opentripplanner/blob/master/vignettes/advanced_features.Rmd"><code>vignettes/advanced_features.Rmd</code></a></small>
       <div class="hidden name"><code>advanced_features.Rmd</code></div>
@@ -186,9 +186,9 @@ Isochrones from Ryde ferry
 <p>For troubleshooting routing issues, you can visualise the traversal permissions of street edges, the bike safety of edges, and how transit stops are linked to streets. For these additional debug layers to be available, add <code>?debug_layers=true</code> to the URL, like this: <a href="http://localhost:8080?debug_layers=true" class="uri">http://localhost:8080?debug_layers=true</a>. The extra layers will be listed in the layer stack menu.</p>
 <p>You can read more about the different debug layers in the official OTP documentation: <a href="http://docs.opentripplanner.org/en/latest/Troubleshooting-Routing/#debug-layers" class="uri">http://docs.opentripplanner.org/en/latest/Troubleshooting-Routing/#debug-layers</a>.</p>
 </div>
-<div id="configuring-open-trip-planner" class="section level2">
+<div id="configuring-opentripplanner" class="section level2">
 <h2 class="hasAnchor">
-<a href="#configuring-open-trip-planner" class="anchor"></a>Configuring Open Trip Planner</h2>
+<a href="#configuring-opentripplanner" class="anchor"></a>Configuring OpenTripPlanner</h2>
 <p>How OTP works can be configures using json files. <code>build-config.json</code> is used during graph building (i.e. <code><a href="../reference/otp_build_graph.html">otp_build_graph()</a></code>). While <code>router-config.json</code> is used during setup (i.e. <code><a href="../reference/otp_setup.html">otp_setup()</a></code>). These files must be saved with the rest of your data and each router can have a unique configuration.</p>
 <p>To help configure OTP there are several useful functions. <code><a href="../reference/otp_make_config.html">otp_make_config()</a></code> makes a default config object and fills it with default values. It is simply a named list, so you can eaily modify the values. <code><a href="../reference/otp_validate_config.html">otp_validate_config()</a></code> does basic checks on a config object to make sure it is valid. Finally <code><a href="../reference/otp_write_config.html">otp_write_config()</a></code> exports the config object as a properly formatted json file.</p>
 <p>A simple example of chaing the default walking speed.</p>
@@ -199,7 +199,7 @@ Isochrones from Ryde ferry
 <a class="sourceLine" id="cb9-5" data-line-number="5"><span class="kw"><a href="../reference/otp_write_config.html">otp_write_config</a></span>(router_config,                <span class="co"># Save the config file</span></a>
 <a class="sourceLine" id="cb9-6" data-line-number="6">                 <span class="dt">dir =</span> data_path,</a>
 <a class="sourceLine" id="cb9-7" data-line-number="7">                 <span class="dt">router =</span> <span class="st">"default"</span>)</a></code></pre></div>
-<p>There is much more information about configuring Open Trip Planner at <a href="https://opentripplanner.readthedocs.io/en/latest/Configuration/" class="uri">https://opentripplanner.readthedocs.io/en/latest/Configuration/</a></p>
+<p>There is much more information about configuring OpenTripPlanner at <a href="https://opentripplanner.readthedocs.io/en/latest/Configuration/" class="uri">https://opentripplanner.readthedocs.io/en/latest/Configuration/</a></p>
 </div>
   </div>
 
@@ -213,7 +213,7 @@ Isochrones from Ryde ferry
       <li><a href="#isochrones">Isochrones</a></li>
       <li><a href="#geo-coding">Geo-coding</a></li>
       <li><a href="#debug-layers">Debug Layers</a></li>
-      <li><a href="#configuring-open-trip-planner">Configuring Open Trip Planner</a></li>
+      <li><a href="#configuring-opentripplanner">Configuring OpenTripPlanner</a></li>
       </ul>
 </div>
       </div>
