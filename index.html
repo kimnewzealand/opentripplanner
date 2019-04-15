@@ -109,7 +109,7 @@
 <a href="#r-package" class="anchor"></a>R Package</h3>
 <p>Install the package with <strong>devtools</strong> as follows:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"devtools"</span>) <span class="co"># If you do not already have the devtools package</span></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"ITSleeds/opentripplanner"</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb1-2" data-line-number="2">devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">"ITSleeds/opentripplanner"</span>)</a></code></pre></div>
 </div>
 </div>
 <div id="usage" class="section level2">
@@ -142,7 +142,7 @@
 <div id="tests" class="section level2">
 <h2 class="hasAnchor">
 <a href="#tests" class="anchor"></a>Tests</h2>
-<p>As this package does not work without a working connection to OTP, tests only run on machines that have the environment variable <code>I_have_OTP</code> with the value <code>TRUE</code>. You can add this with <code><a href="https://www.rdocumentation.org/packages/usethis/topics/edit">usethis::edit_r_environ()</a></code>.</p>
+<p>As this package does not work without a working connection to OTP, tests only run on machines that have the environment variable <code>I_have_OTP</code> with the value <code>TRUE</code>. You can add this with <code>usethis::edit_r_environ()</code>.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Sys.getenv">Sys.getenv</a></span>(<span class="st">"I_have_OTP"</span>)</a></code></pre></div>
 </div>
 <div id="acknowledgement" class="section level2">

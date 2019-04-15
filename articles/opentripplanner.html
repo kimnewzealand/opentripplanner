@@ -86,7 +86,7 @@
       <h1>opentripplanner: getting started</h1>
                         <h4 class="author">Marcus Young, modified by Malcolm Morgan and Robin Lovelace</h4>
             
-            <h4 class="date">2019-04-08</h4>
+            <h4 class="date">2019-04-15</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ITSLeeds/opentripplanner/blob/master/vignettes/opentripplanner.Rmd"><code>vignettes/opentripplanner.Rmd</code></a></small>
       <div class="hidden name"><code>opentripplanner.Rmd</code></div>
@@ -111,7 +111,7 @@
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>The following commands will install and attach the package:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># install.packages("devtools")</span></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"ITSLeeds/opentripplanner"</span>)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">"ITSLeeds/opentripplanner"</span>)</a>
 <a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(opentripplanner)</a></code></pre></div>
 <p>Before you can use the package, you should set-up the OpenTripPlanner Java program. You will need to download the latest version of OTP from <a href="https://repo1.maven.org/maven2/org/opentripplanner/otp/" class="uri">https://repo1.maven.org/maven2/org/opentripplanner/otp/</a> , at time of writing the latest version of OTP is version 1.3 so you would want to get <a href="https://repo1.maven.org/maven2/org/opentripplanner/otp/1.3.0/otp-1.3.0-shaded.jar" class="uri">https://repo1.maven.org/maven2/org/opentripplanner/otp/1.3.0/otp-1.3.0-shaded.jar</a></p>
 <p>The following code downloads the file into a temporary folder called <code>OTP</code> you may wish to change this to keep your results after closing R:</p>
