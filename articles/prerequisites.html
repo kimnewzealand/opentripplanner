@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">opentripplanner</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.2.0</span>
       </span>
     </div>
 
@@ -176,24 +176,6 @@
 <p>You can also compile the latest version of OTP from source, as outlined at <a href="http://docs.opentripplanner.org/en/latest/Getting-OTP/">docs.opentripplanner.org/</a>.</p>
 </div>
 </div>
-<div id="check-the-installation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#check-the-installation" class="anchor"></a>Check the installation</h2>
-<p>To check if the installation has worked, run the following lines of code:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(opentripplanner)</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">path_otp &lt;-<span class="st"> "otp"</span> <span class="co"># for system install</span></a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="co"># path_otp &lt;- "~/programs/otp.jar" # for local java file</span></a>
-<a class="sourceLine" id="cb1-4" data-line-number="4">path_data &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/getwd">getwd</a></span>()</a>
-<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/files2">dir.create</a></span>(<span class="st">"graphs"</span>)</a>
-<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/files2">dir.create</a></span>(<span class="st">"graphs/default"</span>)</a>
-<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/download.file">download.file</a></span>(<span class="st">"https://github.com/ITSLeeds/opentripplanner/releases/download/0.1/isle-of-wight-demo.zip"</span>, </a>
-<a class="sourceLine" id="cb1-8" data-line-number="8">              <span class="dt">destfile =</span> <span class="st">"isle-of-wight-demo.zip"</span>, <span class="dt">mode=</span><span class="st">"wb"</span>)</a>
-<a class="sourceLine" id="cb1-9" data-line-number="9"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/unzip">unzip</a></span>(<span class="st">"isle-of-wight-demo.zip"</span>, <span class="dt">exdir =</span> <span class="st">"graphs/default"</span>)</a>
-<a class="sourceLine" id="cb1-10" data-line-number="10"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/unlink">unlink</a></span>(<span class="st">"isle-of-wight-demo.zip"</span>)</a>
-<a class="sourceLine" id="cb1-11" data-line-number="11">log &lt;-<span class="st"> </span><span class="kw"><a href="../reference/otp_build_graph.html">otp_build_graph</a></span>(<span class="dt">otp =</span> path_otp, <span class="dt">dir =</span> path_data) </a>
-<a class="sourceLine" id="cb1-12" data-line-number="12"><span class="kw"><a href="../reference/otp_setup.html">otp_setup</a></span>(<span class="dt">otp =</span> path_otp, <span class="dt">dir =</span> path_data)</a>
-<a class="sourceLine" id="cb1-13" data-line-number="13"><span class="kw"><a href="../reference/otp_stop.html">otp_stop</a></span>()</a></code></pre></div>
-</div>
 <div id="getting-data-for-otp" class="section level2">
 <h2 class="hasAnchor">
 <a href="#getting-data-for-otp" class="anchor"></a>Getting Data for OTP</h2>
@@ -211,7 +193,7 @@
 <div id="elevation-data" class="section level3">
 <h3 class="hasAnchor">
 <a href="#elevation-data" class="anchor"></a>Elevation Data</h3>
-<p>You can add terrain information to your routes, especially useful for walking and cycling using GeoTIFF images. You can find worldwide elevation data at <a href="https://www2.jpl.nasa.gov/srtm/" class="uri">https://www2.jpl.nasa.gov/srtm/</a>.</p>
+<p>You can add terrain information to your routes, especially useful for walking and cycling using GeoTIFF images. You can find worldwide elevation data from <a href="https://www2.jpl.nasa.gov/srtm/">NASA</a>.</p>
 </div>
 </div>
 <div id="next-steps" class="section level2">
@@ -229,7 +211,6 @@
 <li><a href="#introduction">Introduction</a></li>
       <li><a href="#what-is-this-package-for-and-what-is-a-package-anyway">What is this package for, and what is a package anyway?</a></li>
       <li><a href="#what-do-i-need-to-get-started">What do I need to get started?</a></li>
-      <li><a href="#check-the-installation">Check the installation</a></li>
       <li><a href="#getting-data-for-otp">Getting Data for OTP</a></li>
       <li><a href="#next-steps">Next Steps</a></li>
       </ul>
@@ -240,7 +221,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Marcus Young, Malcolm Morgan.</p>
+  <p>Developed by Marcus Young, Malcolm Morgan, Robin Lovelace.</p>
 </div>
 
 <div class="pkgdown">

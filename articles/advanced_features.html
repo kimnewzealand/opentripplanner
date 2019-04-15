@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">opentripplanner</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.2.0</span>
       </span>
     </div>
 
@@ -105,11 +105,12 @@
 <p>For this vignette, we will use the same data as the <a href="https://itsleeds.github.io/opentripplanner/articles/opentripplanner.html">Getting Started vignette</a> vignette. If you have not yet created the example graph you can set it up with the following commands. If you are using non-default settings see the Getting Started vignette for full details.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(opentripplanner)</a>
 <a class="sourceLine" id="cb1-2" data-line-number="2"><span class="co"># Path to a folder containing the OTP.jar file, change to where you saved the file.</span></a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">path_otp &lt;-<span class="st"> "C:/Users/Public/otp.jar"</span></a>
-<a class="sourceLine" id="cb1-4" data-line-number="4">path_data &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/getwd">getwd</a></span>() <span class="co"># find the current working directory</span></a>
-<a class="sourceLine" id="cb1-5" data-line-number="5">log &lt;-<span class="st"> </span><span class="kw"><a href="../reference/otp_build_graph.html">otp_build_graph</a></span>(<span class="dt">otp =</span> path_otp, <span class="dt">dir =</span> path_data)</a>
-<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="kw"><a href="../reference/otp_setup.html">otp_setup</a></span>(<span class="dt">otp =</span> path_otp, <span class="dt">dir =</span> path_data, <span class="dt">analyst =</span> T)</a>
-<a class="sourceLine" id="cb1-7" data-line-number="7">otpcon &lt;-<span class="st"> </span><span class="kw"><a href="../reference/otp_connect.html">otp_connect</a></span>()</a></code></pre></div>
+<a class="sourceLine" id="cb1-3" data-line-number="3">path_data &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/file.path">file.path</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/tempfile">tempdir</a></span>(),<span class="st">"OTP"</span>)</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">path_otp &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/file.path">file.path</a></span>(path_data,<span class="st">"otp.jar"</span>)</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="co"># Build Graph and start OTP</span></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">log &lt;-<span class="st"> </span><span class="kw"><a href="../reference/otp_build_graph.html">otp_build_graph</a></span>(<span class="dt">otp =</span> path_otp, <span class="dt">dir =</span> path_data)</a>
+<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="kw"><a href="../reference/otp_setup.html">otp_setup</a></span>(<span class="dt">otp =</span> path_otp, <span class="dt">dir =</span> path_data, <span class="dt">analyst =</span> T)</a>
+<a class="sourceLine" id="cb1-8" data-line-number="8">otpcon &lt;-<span class="st"> </span><span class="kw"><a href="../reference/otp_connect.html">otp_connect</a></span>()</a></code></pre></div>
 </div>
 </div>
 <div id="batch-routing" class="section level2">
@@ -131,8 +132,8 @@
 <p>You can plot the routes using <code>tmap</code></p>
 <p>If you do plot all the routes it should look something like this:</p>
 <div class="figure" style="text-align: center">
-<img src="images/routes_to_ferry.jpg" alt="\label{fig:route2airport}Driving Routes to Rye Ferry"><p class="caption">
-Driving Routes to Rye Ferry
+<img src="images/routes_to_ferry.jpg" alt="\label{fig:route2airport}Driving Routes to Ryde Ferry"><p class="caption">
+Driving Routes to Ryde Ferry
 </p>
 </div>
 <div id="all-to-all-routing" class="section level3">
@@ -222,7 +223,7 @@ Isochrones from Ryde ferry
 
 
       <footer><div class="copyright">
-  <p>Developed by Marcus Young, Malcolm Morgan.</p>
+  <p>Developed by Marcus Young, Malcolm Morgan, Robin Lovelace.</p>
 </div>
 
 <div class="pkgdown">
