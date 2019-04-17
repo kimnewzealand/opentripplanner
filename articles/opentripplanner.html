@@ -86,7 +86,7 @@
       <h1>opentripplanner: getting started</h1>
                         <h4 class="author">Marcus Young, modified by Malcolm Morgan and Robin Lovelace</h4>
             
-            <h4 class="date">2019-04-16</h4>
+            <h4 class="date">2019-04-17</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ITSLeeds/opentripplanner/blob/master/vignettes/opentripplanner.Rmd"><code>vignettes/opentripplanner.Rmd</code></a></small>
       <div class="hidden name"><code>opentripplanner.Rmd</code></div>
@@ -189,10 +189,10 @@ OTP Web GUI
 <p>Now we can use R to get a route from the OTP. OTP accepts pairs of longitude/latitude coordinates for a <code>fromPlace</code> (start of the journey) and <code>toPlace</code> (end of the journey).</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">route &lt;-<span class="st"> </span><span class="kw"><a href="../reference/otp_plan.html">otp_plan</a></span>(otpcon, <span class="dt">fromPlace =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="op">-</span><span class="fl">1.17502</span>, <span class="fl">50.64590</span>), <span class="dt">toPlace =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="op">-</span><span class="fl">1.15339</span>, <span class="fl">50.72266</span>))</a></code></pre></div>
 <p>If you have the <code>tmap</code> package installed you can view the route using.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"tmap"</span>)  <span class="co"># Only needed if you don't have tmap</span></a>
-<a class="sourceLine" id="cb11-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(tmap)             <span class="co"># Load the tmap package</span></a>
-<a class="sourceLine" id="cb11-3" data-line-number="3"><span class="kw">tmap_mode</span>(<span class="st">"view"</span>)         <span class="co"># Set tmap to interative viewing</span></a>
-<a class="sourceLine" id="cb11-4" data-line-number="4"><span class="kw">qtm</span>(sf<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/sf/topics/st_zm">st_zm</a></span>(route))     <span class="co"># Plot the route on a map</span></a></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="co"># install.packages("tmap") # Only needed if you don't have tmap</span></a>
+<a class="sourceLine" id="cb11-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(tmap)              <span class="co"># Load the tmap package</span></a>
+<a class="sourceLine" id="cb11-3" data-line-number="3"><span class="kw">tmap_mode</span>(<span class="st">"view"</span>)          <span class="co"># Set tmap to interative viewing</span></a>
+<a class="sourceLine" id="cb11-4" data-line-number="4"><span class="kw">qtm</span>(sf<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/sf/topics/st_zm">st_zm</a></span>(route))      <span class="co"># Plot the route on a map</span></a></code></pre></div>
 <p>Notice the use of <code><a href="https://www.rdocumentation.org/packages/sf/topics/st_zm">sf::st_zm(route)</a></code> this is because <code>tmap</code> does not currently support XYZ coordinates.</p>
 </div>
 <div id="stopping-the-otp" class="section level2">
