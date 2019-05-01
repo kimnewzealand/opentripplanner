@@ -130,11 +130,11 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>otp_plan</span>(<span class='kw'>otpcon</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>fromPlace</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>toPlace</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>mode</span> <span class='kw'>=</span> <span class='st'>"CAR"</span>,
-  <span class='kw'>date_time</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Sys.time'>Sys.time</a></span>(), <span class='kw'>arriveBy</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>maxWalkDistance</span> <span class='kw'>=</span> <span class='fl'>1000</span>,
-  <span class='kw'>walkReluctance</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>transferPenalty</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>minTransferTime</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>numItineraries</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>full_elevation</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>get_geometry</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fl'>1</span>)</pre>
+    <pre class="usage"><span class='fu'>otp_plan</span>(<span class='kw'>otpcon</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>fromPlace</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>toPlace</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>fromID</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>toID</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>mode</span> <span class='kw'>=</span> <span class='st'>"CAR"</span>, <span class='kw'>date_time</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Sys.time'>Sys.time</a></span>(),
+  <span class='kw'>arriveBy</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>maxWalkDistance</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>walkReluctance</span> <span class='kw'>=</span> <span class='fl'>2</span>,
+  <span class='kw'>transferPenalty</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>minTransferTime</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>numItineraries</span> <span class='kw'>=</span> <span class='fl'>3</span>,
+  <span class='kw'>full_elevation</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>get_geometry</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fl'>1</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -152,6 +152,14 @@ or 2 column matrix of Longitude/Latitude pairs, or sf data.frame of POINTS</p></
       <th>toPlace</th>
       <td><p>Numeric vector, Longitude/Latitude pair, e.g. `c(-0.088780,51.506383)`,
 or 2 column matrix of Longitude/Latitude pairs, or sf data.frame of POINTS</p></td>
+    </tr>
+    <tr>
+      <th>fromID</th>
+      <td><p>character vector same length as fromPlace</p></td>
+    </tr>
+    <tr>
+      <th>toID</th>
+      <td><p>character vector same length as toPlace</p></td>
     </tr>
     <tr>
       <th>mode</th>
