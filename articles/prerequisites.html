@@ -86,7 +86,7 @@
       <h1>Prerequisites</h1>
                         <h4 class="author">Malcolm Morgan</h4>
             
-            <h4 class="date">2019-05-13</h4>
+            <h4 class="date">2019-05-18</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ITSLeeds/opentripplanner/blob/master/vignettes/prerequisites.Rmd"><code>vignettes/prerequisites.Rmd</code></a></small>
       <div class="hidden name"><code>prerequisites.Rmd</code></div>
@@ -168,11 +168,13 @@
 <div id="to-use-otp" class="section level3">
 <h3 class="hasAnchor">
 <a href="#to-use-otp" class="anchor"></a>To use OTP</h3>
-<ul>
-<li>Download free Java 8 from <a href="https://www.java.com/en/download/" class="uri">https://www.java.com/en/download/</a> and install Java. You will need the correct version for your operating system. If possible the 64 Bit version of Java is preferable, especially if you want to use OTP over large areas.</li>
-</ul>
+<p>Download and install Java. You will need the correct version for your operating system. If possible the 64 Bit version of Java is preferable, especially if you want to use OTP over large areas.</p>
 <p><strong>Note</strong> OTP does not work with later versions of Java such as Java 11.</p>
-<p>To install Java 8 on Linux, we recommend instructions at <a href="https://medium.com/coderscorner/installing-oracle-java-8-in-ubuntu-16-10-845507b13343">medium.com/coderscorner</a> and on <a href="https://askubuntu.com/questions/740757/switch-between-multiple-java-versions">StackOverflow</a>.</p>
+<p>To get Java:</p>
+<ul>
+<li><p><strong>Windows/Mac</strong> <a href="https://www.java.com/en/download/" class="uri">https://www.java.com/en/download/</a> This link defaults to the 32 Bit version.</p></li>
+<li><p><strong>Linux</strong> we recommend instructions at <a href="https://askubuntu.com/questions/740757/switch-between-multiple-java-versions">StackOverflow</a>.</p></li>
+</ul>
 <p>You can also compile the latest version of OTP from source, as outlined at <a href="http://docs.opentripplanner.org/en/latest/Getting-OTP/">docs.opentripplanner.org/</a>.</p>
 </div>
 </div>
@@ -184,6 +186,7 @@
 <h3 class="hasAnchor">
 <a href="#road-map-data" class="anchor"></a>Road Map Data</h3>
 <p>OTP uses road maps from the <a href="https://www.openstreetmap.org">Open Street Map (OSM)</a> in the .pbf format. OSM is a free map that anybody can edit. You can download all or part of the OSM from <a href="https://download.geofabrik.de/">Geofabrik</a>.</p>
+<p>Note that OTP only really needs the road network from the OSM. So for large areas, you may wish to remove unneeded data from the file using <a href="https://wiki.openstreetmap.org/wiki/Osmconvert">osmconvert</a> and <a href="https://wiki.openstreetmap.org/wiki/Osmfilter">osmfilter</a> and</p>
 </div>
 <div id="public-transport-timetables" class="section level3">
 <h3 class="hasAnchor">
@@ -194,6 +197,8 @@
 <h3 class="hasAnchor">
 <a href="#elevation-data" class="anchor"></a>Elevation Data</h3>
 <p>You can add terrain information to your routes, especially useful for walking and cycling using GeoTIFF images. You can find worldwide elevation data from <a href="https://www2.jpl.nasa.gov/srtm/">NASA</a>.</p>
+<p><strong>Warning</strong> It is common for GeoTIFF to have a no data value often the maximum possible value. OTP can misinterpret this as an elevation value. So set your no data values in your elevation data to something more plausible like 0.</p>
+<p>Note that OTP does not support all types of GeoTIFF compression so you may have to change the compression type of the image if you are experiencing problems.</p>
 </div>
 </div>
 <div id="next-steps" class="section level2">
