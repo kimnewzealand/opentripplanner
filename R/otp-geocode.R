@@ -1,17 +1,24 @@
 #'  Use OTP Geo-coder to find a location
 #'
-#'  Geo-coding converts a named place, such as a street name into a lat/lng pair.
+#'  Geo-coding converts a named place, such as a street name into a
+#'      lng/lat pair.
 #'
 #' @param otpcon OTP connection object produced by otp_connect()
 #' @param query Character, The query string we want to geocode
-#' @param autocomplete logical Whether we should use the query string to do a prefix match, default FALSE
-#' @param stops Logical, Search for stops, either by name or stop code, default TRUE
-#' @param clusters Logical, Search for clusters by their name, default FALSE
-#' @param corners Logical, Search for street corners using at least one of the street names, default TRUE
-#' @param type Character, How should results be returned can be "SF" or "Coordinates" or "Both", Default "SF"
+#' @param autocomplete logical Whether we should use the query
+#'     string to do a prefix match, default FALSE
+#' @param stops Logical, Search for stops, either by name or
+#'     stop code, default TRUE
+#' @param clusters Logical, Search for clusters by their name,
+#'     default FALSE
+#' @param corners Logical, Search for street corners using at
+#'     least one of the street names, default TRUE
+#' @param type Character, How should results be returned can
+#'     be "SF" or "Coordinates" or "Both", Default "SF"
 #' @family routing
 #' @return
-#' Returns a data.frame of SF POINTS or Coordinates of all the locations that match `query`
+#' Returns a data.frame of SF POINTS or Coordinates of all
+#'     the locations that match `query`
 #' @examples
 #' \dontrun{
 #' locations <- otp_geocode(otpcon, "High Street")
@@ -27,18 +34,27 @@ otp_geocode <- function(otpcon = NULL,
                         clusters = FALSE,
                         corners = TRUE,
                         type = "SF") {
+  # Check for OTP2
+  if (!is.null(otpcon$otp_version)) {
+    if (otpcon$otp_version >= 2) {
+      stop("Geocoding is not supported by OTP v2.X")
+    }
+  }
+
   # Validate Inputs
   checkmate::assert_class(otpcon, "otpconnect", null.ok = FALSE)
   checkmate::assert_character(query,
-                              null.ok = FALSE, len = 1,
-                              min.chars = 1, any.missing = FALSE)
+    null.ok = FALSE, len = 1,
+    min.chars = 1, any.missing = FALSE
+  )
   checkmate::assert_logical(autocomplete, null.ok = FALSE)
   checkmate::assert_logical(stops, null.ok = FALSE)
   checkmate::assert_logical(clusters, null.ok = FALSE)
   checkmate::assert_logical(corners, null.ok = FALSE)
   checkmate::assert_choice(type,
-                           choices = c("SF", "Coordinates", "Both"),
-                           null.ok = FALSE)
+    choices = c("SF", "Coordinates", "Both"),
+    null.ok = FALSE
+  )
 
 
   autocomplete <- tolower(as.character(autocomplete))
@@ -58,19 +74,20 @@ otp_geocode <- function(otpcon = NULL,
     corners = corners
   )
 
-  req <- httr::GET(routerUrl,
-    query = querylist
-  )
-
   # convert response content into text
-  text <- httr::content(req, as = "text", encoding = "UTF-8")
+  url <- build_url(routerUrl, querylist)
+  text <- curl::curl_fetch_memory(url)
+  text <- rawToChar(text$content)
+
 
   if (nchar(text) == 2) {
     warning(paste0("Failed to find '", query, "'"))
     return(NA)
   } else {
     # parse text to json
-    asjson <- jsonlite::fromJSON(text)
+    # asjson <- jsonlite::fromJSON(text)
+    asjson <- rjson::fromJSON(text)
+    asjson <- data.table::rbindlist(asjson)
     # parse to sf
     if (type %in% c("SF", "Both")) {
       if (type == "SF") {
@@ -80,7 +97,8 @@ otp_geocode <- function(otpcon = NULL,
       }
       response <- sf::st_as_sf(asjson,
         coords = c("lng", "lat"),
-        remove = remove
+        remove = remove,
+        crs = 4326
       )
       return(response)
     } else {

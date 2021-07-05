@@ -11,75 +11,210 @@ vignette: >
 
 ## Introduction
 
-This vignette is an introduction to OpenTripPlanner (OTP) - an open-source and cross-platform multi-modal route planner written in JAVA. It uses imported Open Street Map (OSM) data for routing on the street and path network and supports
+This vignette is an introduction to OpenTripPlanner (OTP) - an open-source and cross-platform multi-modal route planner written in Java. It uses imported OpenStreetMap (OSM) data for routing on the street and path network and supports
 multi-agency public transport routing through imported  [General Transit Feed Specification](https://developers.google.com/transit/gtfs/) (GTFS) feeds. It can also apply a digital elevation model to the OSM street network, allowing, for example, cycle-friendly routes to be requested. OTP has a web front-end that can be used by end-users and a sophisticated routing API.
 
-OTP works worldwide as long as there is OSM map coverage in the area. Support for transit timetables and elevation calculations are dependant on the available data. For more information on getting data see the [prerequisites vignette](https://itsleeds.github.io/opentripplanner/articles/prerequisites.html)
+OTP works worldwide as long as there is OSM map coverage in the area. Support for transit timetables and elevation calculations are dependant on the available data. For more information on getting data see the [getting data for OTP](https://docs.ropensci.org/opentripplanner/articles/opentripplanner.html#getting-data-for-otp) section.
 
-A major advantage of running your own multi-modal route planner is the ability to carry out analysis using amended transport data. Services such as Google Maps or TransportAPI are based on current public transport schedules and the existing road network. OTP enables you to modify transit schedules and/or make changes to the underlying street network. By editing a local copy of OSM, you can model the effects of opening new roads, closing roads or imposing other restrictions. You can also look back in time. For example, you might want to examine the effect of reductions in rural bus services on the accessibility of health facilities. To do this you would need a network with bus schedules as they were in previous years.
+A significant advantage of running your own multi-modal route planner is the ability to carry out analysis using amended transport data. Services such as Google Maps or TransportAPI are based on current public transport schedules and the existing road network. OTP enables you to modify transit schedules and/or make changes to the underlying street network. By editing a local copy of OSM, you can model the effects of opening new roads, closing roads or imposing other restrictions. You can also look back in time. For example, you might want to examine the effect of reductions in rural bus services on the accessibility of health facilities. To do this, you would need a network with bus schedules as they were in previous years.
 
 ## Prerequisites
 
-You will need to have installed R, RStudio, and Java 8. For more details on the required software see the [prerequisites vignette](https://itsleeds.github.io/opentripplanner/articles/prerequisites.html) included with this package.
+You will need to have installed R, RStudio, and Java 8. For more details on the required software, see the [prerequisites vignette](https://docs.ropensci.org/opentripplanner/articles/prerequisites.html) included with this package.
 
 ## Installation
 
-The following commands will install and attach the package:
+Install the stable version of the package from CRAN as follows:
 
-```{r, eval=FALSE}
-# install.packages("devtools")
-devtools::install_github("ITSLeeds/opentripplanner")
-library(opentripplanner)
+```{r installCRAN, eval=FALSE}
+install.packages("opentripplanner") # Install Package
+library(opentripplanner)            # Load Package
 ```
 
-Before you can use the package, you should set-up the OpenTripPlanner Java program.
-You will need to download the latest version of OTP from https://repo1.maven.org/maven2/org/opentripplanner/otp/ , at time of writing the latest version of OTP is version 1.3 so you would want to get https://repo1.maven.org/maven2/org/opentripplanner/otp/1.3.0/otp-1.3.0-shaded.jar 
+Or you can install the development version from GitHub using the **remotes** package:
 
-The following code downloads the file into a temporary folder called `OTP` you may wish to change this to keep your results after closing R:
+```{r installGitHub, eval=FALSE}
+remotes::install_github("ropensci/opentripplanner") # Install Package
+library(opentripplanner)                            # Load Package
+```
+
+## Downloading OTP and the demonstration data
+
+We will build an example graph for the Isle of Wight using some example data provided for the package. A graph is what OTP uses to find routes, and must be built out of the raw data provided. Please note the demo data has been modified for teaching purposes and should not be used for analysis.
+
+### Creating a folder to store OTP and its data
+
+OTP expects its data to be stored in a specific structure, see [building your own otp graph](https://docs.ropensci.org/opentripplanner/articles/opentripplanner.html#building-your-own-otp-graph) for more details. We will make a folder called OTP in the temporary directory. 
 
 ```{r, eval=FALSE}
-# download file (may want to do this manually)
-dir.create(file.path(tempdir(), "OTP"))
 path_data <- file.path(tempdir(), "OTP")
-path_otp <- file.path(path_data, "otp.jar")
-u <- "https://repo1.maven.org/maven2/org/opentripplanner/otp/1.3.0/otp-1.3.0-shaded.jar"
-download.file(url = u, destfile = path_otp, mode = "wb")
+dir.create(path_data) 
 ```
 
-For more information and advanced options, see http://docs.opentripplanner.org/en/latest/Getting-OTP/ 
+**You may wish to change this** to keep your files after closing R. Otherwise you will need to download your files and build your graph every time. For example:
 
-## Building an OTP Graph
+```{r, eval=FALSE}
+path_data <- file.path("C:/Users/Public", "OTP")
+dir.create(path_data) 
+```
 
-We will build an example graph for the Isle of Wight using some example data provided for the package. A graph is what OTP uses to find routes, and must be built out of the raw data provided. First, we will download the sample data and put it in the folder structure that OTP expects.
+### Downloading OTP
 
+As of version 0.3 the `otp_dl_jar` function will download and cache the OTP jar file. So you can simply get the path to the OTP JAR file like this:
+
+```{r, eval=FALSE}
+path_otp <- otp_dl_jar()
+```
+`otp_dl_jar` will first check its internal cache for the JAR file and only download it if it is unavailable.
+
+If you wish to specify the location the JAR file is saved (as in version 0.2)  use:
+
+```{r, eval=FALSE}
+path_otp <- otp_dl_jar(path_data, cache = FALSE)
+```
+
+### Downloading Example Data
+
+The `otp_dl_demo` function downloads the demonstration data and puts it in the correct structure.
 
 ```{r eval=FALSE}
-# Path to the sample data
-dir.create(file.path(path_data,"graphs")) # create a folder structure for the data
-dir.create(file.path(path_data,"graphs","default"))
-# Download example data
-download.file("https://github.com/ITSLeeds/opentripplanner/releases/download/0.1/isle-of-wight-demo.zip", 
-              destfile = file.path(path_data,"isle-of-wight-demo.zip") , mode="wb")
-unzip(file.path(path_data,"isle-of-wight-demo.zip"), exdir = file.path(path_data,"graphs","default"))
-unlink(file.path(path_data,"isle-of-wight-demo.zip"))
+otp_dl_demo(path_data)
 ```
+
+## Building an OTP Graph
 
 Now we can build the graph. This code will create a new file `Graph.obj` that will be saved in the location defined by `path_data`. 
 
 ```{r eval=FALSE}
-# Run the OTP and Build a graph object
-log <- otp_build_graph(otp = path_otp, dir = path_data) 
+log1 <- otp_build_graph(otp = path_otp, dir = path_data) 
 ```
 
-### Building your own OTP Graph
+By default, R will assign OTP 2GB of memory to build the graph. For larger areas, you may need more memory. You can use the `memory` argument to set the memory allocation in MB. For example, to allocate 10GB, you would use:
 
-If you want to build your own graph for a different location follow these steps, and change your `path_data` variable to the folder with your data.
+```{r eval=FALSE}
+log1 <- otp_build_graph(otp = path_otp, dir = path_data, memory = 10240) 
+```
 
-An OTP graph specifies every location in the region covered and how to travel between them, and is compiled by OTP using OSM data for the street and path network (used for walk, bicycle and drive modes) and GTFS data for transit scheduling.
+Note that you cannot allocate more memory than you have RAM, and if you use 32 Bit Java you cannot allocate more than 3GB. It is possible to run OTP in just 1GB of memory for very small areas (including the demo dataset). 
 
-Our first task is to create the folder and file structure expected by OTP. This is a base directory called `otp` which contains a sub-directory called `graphs`. Directories created under `graphs` are known as OTP routers and contain all the files required to build a graph. A single OTP instance can host several routers, for example covering different regions. 
+## Launch OTP and load the graph
 
-Create a router called 'default', and include the GTFS and OSM files for the road network and default transit schedules for the railway on the Isle of Wight, along with `router-config.json`, as shown below:
+The next step is to start up your OTP server, running the router called 'default'. OTP will load the graph you created into memory, and you will then be able to plan multi-modal routes using the web interface. Run the following command:
+
+```{r, eval = FALSE}
+log2 <- otp_setup(otp = path_otp, dir = path_data)
+```
+
+OTP has a built-in web server called Grizzly which runs on port 8080 (http) and 8081 (https). If you have another application running on your computer that uses these ports then you will need to specify alternative ports using the `port` and `securePort` options, for example:
+
+```{r, eval = FALSE}
+log2 <- otp_setup(otp = path_otp, dir = path_data, port = 8801, securePort = 8802)
+```
+
+It should only take a minute or two for OTP to load the graph and start the Grizzly server. If it has worked, you should see the message: `OTP is ready to use`, and R will open your web browser at the OTP.
+
+You can also access the web interface using the URL: `http://localhost:8080`. You can now zoom into the Isle of Wight area and request a route by setting an origin and a destination directly on the map (by right-clicking your mouse). You can specify travel dates, times and modes using the 'Trip Options' window (see Figure \ref{fig:otpgui}). You can change the background map from the layer stack icon at the top right.
+
+```{r, echo = FALSE, fig.align='center', fig.cap="\\label{fig:otpgui}OTP Web Interface"}
+knitr::include_graphics("images/otpwebgui.jpg")
+```
+
+**Note:** The web interface does not work correctly in Internet Explorer - use Firefox or Chrome.
+
+## Connecting to the OTP from R
+
+Now you have the OTP running on your computer you can let R connect to the OTP. `otp_connect()` creates an OTP connection object which will allow R to connect to the OTP. By default, your local timezone is used, but if you are not in the UK, you need to specify the UK timezone to get the correct results with the demo data.
+
+```{r, eval = FALSE}
+otpcon <- otp_connect(timezone = "Europe/London")
+```
+
+The connection is created and tested, and a message will be returned, saying if the connection exists or not. 
+If you have not used the default settings, such as a different `port` you can specify those settings in `otp_connect()`.
+
+```{r, eval = FALSE}
+otpcon <- otp_connect(hostname =  "localhost",
+                      router = "default",
+                      port = 8801)
+```
+
+You can also use the `otp_connect()` function to make a connection to OTP on a remote server, for example [digitransit](https://digitransit.fi/en/) run an OTP server for Finland. See their [documentation](https://digitransit.fi/en/developers/) for more details. Digitransit use a non-standard URL structure for their API, so we provide the full URL directly to `otp_connect()`. See the `otp_connect()` help for more details.
+
+```{r, eval = FALSE}
+otpcon <- otp_connect(url = "https://api.digitransit.fi/routing/v1/routers/hsl")
+```
+
+## Running an OTP instance in Docker
+We have been able to run OTP version 1.5.0 from `https://repo1.maven.org/maven2/org/opentripplanner/otp/` in a Dockerfile and query it via the package. The basic Dockerfile looks like:
+
+```Docker
+
+FROM java:8-alpine
+
+ENV OTP_VERSION=1.5.0
+ENV JAVA_OPTIONS=-Xmx1G
+
+ADD https://repo1.maven.org/maven2/org/opentripplanner/otp/$OTP_VERSION/otp-$OTP_VERSION-shaded.jar /usr/local/share/java/otp.jar
+
+COPY otp /usr/local/bin/
+
+EXPOSE 8080
+
+ENTRYPOINT ["otp"]
+CMD ["--help"]
+```
+And then you can build the image using a default Docker build command like `docker build -t <name> .` where of course "." is your working directory with your Dockerfile in. Then just running the instance like
+
+```sh
+docker run \
+  -p 8080:8080 \
+  -v $PWD/graphs:/var/otp/graphs \
+  -e JAVA_OPTIONS=-Xmx4G \
+  urbica/otp --server --autoScan --verbose
+```
+That of course let us place our graphs in the docker volume `$PWD/graphs`. This is slightly edited version of the work described [here](https://github.com/urbica/docker-otp).
+
+## Getting a route from the OTP
+
+Now we can use R to get a route from the OTP. OTP accepts pairs of longitude/latitude coordinates for a `fromPlace` (start of the journey) and `toPlace` (end of the journey).
+
+```{r, eval = FALSE}
+route <- otp_plan(otpcon, 
+                  fromPlace = c(-1.17502, 50.64590), 
+                  toPlace = c(-1.15339, 50.72266))
+```
+
+If you have the `tmap` package installed, you can view the route using.
+
+```{r, eval = FALSE}
+# install.packages("tmap") # Only needed if you don't have tmap
+library(tmap)              # Load the tmap package
+tmap_mode("view")          # Set tmap to interactive viewing
+qtm(route)      # Plot the route on a map
+```
+
+
+## Stopping the OTP
+
+As the OTP is running in Java, it will continue to run after you close R.
+
+You can stop the OTP running using the command. **NOTE: This will stop all running JAVA applications!**
+
+```{r, eval = FALSE}
+otp_stop()
+```
+
+Congratulations, you now have your own multi-modal router planner!
+
+## Building your own OTP Graph
+
+If you want to build your own graph for a different location, follow these steps, and change your `path_data` variable to the folder with your data.
+
+An OTP graph specifies every location in the region covered and how to travel between them, and is compiled by OTP using OSM data for the street and path network (used for walking, bicycle, and drive modes) and GTFS data for transit scheduling.
+
+Our first task is to create the folder and file structure expected by OTP. This is a base directory called `otp` which contains a sub-directory called `graphs`. Directories created under `graphs` are known as OTP routers and contain all the files required to build a graph. A single OTP instance can host several routers, for example, covering different regions. 
+
+The basic file structure is shown below.
 
 ```{r, engine='bash', eval=FALSE}
 / otp                         # Your top folder for storing all OTP data
@@ -93,76 +228,43 @@ Create a router called 'default', and include the GTFS and OSM files for the roa
          
 ```
 
-`router-config.json` is actually read when the OTP server is started (in the next section), but we add it now for convenience.
+`router-config.json` is read when the OTP server is started, while `build-config.json` is read during the graph building stage. For more information on the config files, see the [advanced features vignette](https://docs.ropensci.org/opentripplanner/articles/advanced_features.html).
 
-## Launch OTP and load the graph
+### Multiple Routers 
 
-The next step is to start up your OTP server, running the router called 'default'. OTP will load the graph you created into memory and you will then be able to plan multi-modal routes using the web interface. Run the following command:
+OTP supports multiple routes by having them in separate folders. For example:
 
-```{r, eval = FALSE}
-otp_setup(otp = path_otp, dir = path_data)
+```{r, engine='bash', eval=FALSE}
+/ otp                        # Your top folder for storing all OTP data
+  /graphs                     
+     /london                 # router called london
+         osm.pbf             # map of London
+     /manchester             # router called manchester
+         osm.pbf             # map of Manchester
 ```
 
-OTP has a built-in web server called Grizzly which runs on port 8080 (http) and 8081 (https). If you have another application running on your computer that uses these ports then you will need to specify alternative ports using the `port` and `securePort` options, for example:
+Having multiple routers may be useful to support different regions, or different scenarios, e.g. past, present, future.
 
-```{r, eval = FALSE}
-otp_setup(otp = path_otp, dir = path_data, port = 8801, securePort = 8802)
-```
+Each router requires its own graph via `otp_build_graph()` but only one version of the OTP jar files is needed (i.e. `otp_dl_jar()`) Each route must be started via `otp_setup()` before use. While it is technically possible to run multiple routers simultaneously, it is not recommended for performance reasons.
 
-It should only take a minute or two for OTP to load the graph and start the Grizzly server. If all has worked you should see the message: `OTP is ready to use` and R will open your web browser at the OTP.
+### Getting Data for OTP
 
-You can also access the web interface using the URL: [http://localhost:8080](http://localhost:8080). **Note:** The web interface does not work correctly in Internet Explorer - use Firefox or Chrome. You can now zoom into the Isle of Wight area and request a route by setting an origin and a destination directly on the map (by right-clicking your mouse) and you can specify travel dates, times and modes using the 'Trip Options' window (see Figure \ref{fig:otpgui}). You can change the background map from the layer stack icon at the top right.
+To use OTP on your local computer, you will need data about your location of interest, such as where the roads are, what is the public transport timetable etc.
 
-```{r, echo = FALSE, fig.align='center', fig.cap="\\label{fig:otpgui}OTP Web GUI"}
-knitr::include_graphics("images/otpwebgui.jpg")
-```
+#### Road Map Data
 
+OTP uses road maps from the [Open Street Map (OSM)](https://www.openstreetmap.org) in the [.osm or .pbf format](https://wiki.openstreetmap.org/wiki/OSM_file_formats). OSM is a free map that anybody can edit. You can download all or part of the OSM from [Geofabrik](https://download.geofabrik.de/).
 
-## Connecting to the OTP from R
+Note that OTP only really needs the road network from the OSM, but the Geofabrik downloads include non-road data such as buildings, parks, water etc. So for large areas, you may wish to remove unneeded data from the file before building the graph. You can do this using [osmconvert](https://wiki.openstreetmap.org/wiki/Osmconvert) and [osmfilter](https://wiki.openstreetmap.org/wiki/Osmfilter). These are command-line utilities for editing large OSM files and are documented on the OSM Wiki. For small areas (e.g. city scale) this is not necessary. 
 
-Now you have the OTP running on your computer you can let R connect to the OTP.
+#### Public Transport Timetables
 
-```{r, eval = FALSE}
-otpcon <- otp_connect()
-```
+OTP can use public transport timetable data in the [GTFS format](https://developers.google.com/transit/gtfs/). You can find GTFS data for many regions at [transitland](https://www.transit.land/). For users in the UK see [UK2GTFS](https://itsleeds.github.io/UK2GTFS/)
 
-The connection is created and tested, a message will be returned saying if the connection exists or not. 
+#### Elevation Data
 
-If you have not used the default settings, such as a different `port` you can specify those settings in `otp_connect()`
+You can add terrain information to your routes, especially useful for walking and cycling, using [GeoTIFF images](https://trac.osgeo.org/geotiff). You can find worldwide elevation data from [NASA](https://www2.jpl.nasa.gov/srtm/).
 
-```{r, eval = FALSE}
-otpcon <- otp_connect(hostname =  "localhost", router = "default", port = 8801)
-```
+**Warning** It is common for GeoTIFF to have a no data value often the maximum possible value. OTP can misinterpret this as an elevation value. So set your no data values in your elevation data to something more plausible like 0.
 
-`otp_connect()` creates an OTP connection object which will allow R to connect to the OTP. 
-
-## Getting a route from the OTP
-
-Now we can use R to get a route from the OTP. OTP accepts pairs of longitude/latitude coordinates for a `fromPlace` (start of the journey) and `toPlace` (end of the journey).
-
-```{r, eval = FALSE}
-route <- otp_plan(otpcon, fromPlace = c(-1.17502, 50.64590), toPlace = c(-1.15339, 50.72266))
-```
-
-If you have the `tmap` package installed you can view the route using.
-
-```{r, eval = FALSE}
-# install.packages("tmap") # Only needed if you don't have tmap
-library(tmap)              # Load the tmap package
-tmap_mode("view")          # Set tmap to interative viewing
-qtm(sf::st_zm(route))      # Plot the route on a map
-```
-
-Notice the use of `sf::st_zm(route)` this is because `tmap` does not currently support XYZ coordinates.
-
-## Stopping the OTP
-
-As the OTP is running in Java it will continue to run after you close R.
-
-You can stop the OTP running using the command. **NOTE: This will stop all running JAVA applications!**
-
-```{r, eval = FALSE}
-otp_stop()
-```
-
-Congratulations, you now have your own multi-modal router planner!
+**Note** that OTP does not support all types of GeoTIFF compression so you may have to change the compression type of the image if you are experiencing problems. 

@@ -1,40 +1,49 @@
 Package: opentripplanner
-Title: OpenTripPlanner for R
-Version: 0.1.0.0000
+Title: Setup and connect to 'OpenTripPlanner'
+Version: 0.3.2
 Authors@R: c(
-    person("Marcus", "Young",   email = "M.A.Young@soton.ac.uk", role = c("aut"),
-      comment = c(ORCID = "0000-0003-4627-1116")),
     person("Malcolm", "Morgan", email = "m.morgan1@leeds.ac.uk", role = c("aut","cre"), 
       comment = c(ORCID = "0000-0002-9488-9183")),
+    person("Marcus", "Young",   email = "M.A.Young@soton.ac.uk", role = "aut",
+      comment = c(ORCID = "0000-0003-4627-1116")),
     person("Robin", "Lovelace", email = "rob00x@gmail.com",      role = "aut",
       comment = c(ORCID = "0000-0001-5679-6536")),
     person("Layik", "Hama",     email = "layik.hama@gmail.com",  role = "ctb",
       comment = c(ORCID = "0000-0003-1912-4890"))
     )
 Maintainer: Malcolm Morgan <m.morgan1@leeds.ac.uk>
-Description: An R interface for OpenTripPlanner <http://www.opentripplanner.org/>.
-    OpenTripPlanner (OTP) is an open source platform for multi-modal and multi-agency
-    journey planning written in Java. OTP provides a REST API which OpenTripPlanner
-    for R uses to connect to OTP.
+Description: Setup and connect to 'OpenTripPlanner' (OTP) <http://www.opentripplanner.org/>.
+    OTP is an open source platform for multi-modal and multi-agency
+    journey planning written in 'Java'. The package allows you to manage a local version or 
+    connect to remote OTP server to find walking, cycling, driving, or transit routes.
+    This package has been peer-reviewed by rOpenSci (v. 0.2.0.0).
 Language: EN-GB
-License: file LICENSE
-URL: https://github.com/ITSLeeds/opentripplanner, https://itsleeds.github.io/opentripplanner/
-BugReports: https://github.com/ITSLeeds/opentripplanner/issues
+License: GPL-3
+URL: https://github.com/ropensci/opentripplanner, https://docs.ropensci.org/opentripplanner/
+BugReports: https://github.com/ropensci/opentripplanner/issues
 Encoding: UTF-8
 LazyData: true
 Imports:
     checkmate,
-    dplyr,
+    data.table,
     geodist,
     googlePolylines,
-    httr,
-    jsonlite,
+    curl,
+    rjson,
     pbapply,
-    sf
-RoxygenNote: 6.1.1
-Suggests: 
+    lubridate,
+    sf (>= 0.9.3),
+    sfheaders,
+    tibble
+RoxygenNote: 7.1.1
+Suggests:
+    RcppSimdJson (>= 0.1.2),
     covr,
     knitr,
     rmarkdown,
-    testthat
+    testthat,
+    raster,
+    rgdal
 VignetteBuilder: knitr
+Depends: 
+    R (>= 3.2)

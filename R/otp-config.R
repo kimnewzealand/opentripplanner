@@ -1,16 +1,17 @@
 #' Write config object as json file
 #'
-#' @description
-#' Takes a config list produced by `otp_make_config()` and saves it as json file for OTP
+#' @description Takes a config list produced by `otp_make_config()` and saves it
+#' as json file for OTP
 #'
 #' @param config A named list made/modified from `otp_make_config()`
 #' @param dir Path to folder where data for OTP is to be stored
-#' @param router name of the router, default is "default"
+#' @param router name of the router, default is "default", must be a subfolder
+#'   of dir/graphs
 #' @family setup
 #' @examples
 #' \dontrun{
 #' conf <- otp_make_config("build")
-#' otp_write_config(conf, dir = "C:/otp")
+#' otp_write_config(conf, dir = tempdir())
 #' }
 #' @export
 
@@ -22,10 +23,30 @@ otp_write_config <- function(config,
   otp_validate_config(config)
   config <- otp_list_clean(config)
 
+  message(
+    "The config file will be saved to ",
+    file.path(dir, "graphs", router)
+  )
+
   # Convert to JSON
-  config <- jsonlite::toJSON(config, pretty = TRUE, null = "null", na = "null")
-  jsonlite::write_json(
-    config,
+  # jsonlite::write_json(
+  #   config,
+  #   file.path(
+  #     dir,
+  #     "graphs",
+  #     router,
+  #     paste0(type, "-config.json")
+  #   ),
+  #   pretty = TRUE,
+  #   auto_unbox = TRUE,
+  #   null = "null",
+  #   na = "null"
+  # )
+
+  exportJson <- rjson::toJSON(config, indent = 4)
+
+  write(
+    exportJson,
     file.path(
       dir,
       "graphs",
@@ -36,7 +57,8 @@ otp_write_config <- function(config,
 }
 
 #' Remove NULL values from list
-#' Modified from https://www.rdocumentation.org/packages/rlist/versions/0.4.6.1/topics/list.clean
+#' Modified from
+#' https://www.rdocumentation.org/packages/rlist/versions/0.4.6.1/topics/list.clean
 #'
 #' @param .data list
 #' @param fun function
@@ -68,8 +90,8 @@ otp_list_clean <- function(.data, fun = function(x) {
 #' @family setup
 #' @details
 #'
-#' Performs basic validity checks on class, max/min values etc as appropriate, some of
-#' more complex parameters are not checked. For more details see:
+#' Performs basic validity checks on class, max/min values etc as appropriate,
+#' some of more complex parameters are not checked. For more details see:
 #'
 #' http://docs.opentripplanner.org/en/latest/Configuration
 #' http://dev.opentripplanner.org/javadoc/1.3.0/org/opentripplanner/routing/core/RoutingRequest.html
@@ -81,182 +103,264 @@ otp_list_clean <- function(.data, fun = function(x) {
 #' @export
 
 otp_validate_config <- function(config, type = attributes(config)$config_type) {
-
-  checkmate::assert_subset(type, choices = c("otp", "build", "router"),
-                           empty.ok = FALSE)
+  checkmate::assert_subset(type,
+    choices = c("otp", "build", "router"),
+    empty.ok = FALSE
+  )
 
   if (type == "router") {
     # Logical
     checkmate::assert_logical(config$routingDefaults$allowBikeRental,
-                              len = 1, null.ok = TRUE)
+      len = 1, null.ok = TRUE
+    )
     checkmate::assert_logical(config$routingDefaults$arriveBy,
-                              len = 1, null.ok = TRUE)
+      len = 1, null.ok = TRUE
+    )
     checkmate::assert_logical(config$routingDefaults$batch,
-                              len = 1, null.ok = TRUE)
+      len = 1, null.ok = TRUE
+    )
     checkmate::assert_logical(config$routingDefaults$compactLegsByReversedSearch,
-                              len = 1, null.ok = TRUE)
+      len = 1, null.ok = TRUE
+    )
     checkmate::assert_logical(config$routingDefaults$disableAlertFiltering,
-                              len = 1, null.ok = TRUE)
+      len = 1, null.ok = TRUE
+    )
     checkmate::assert_logical(config$routingDefaults$disableRemainingWeightHeuristic,
-                              len = 1, null.ok = TRUE)
+      len = 1, null.ok = TRUE
+    )
     checkmate::assert_logical(config$routingDefaults$driveOnRight,
-                              len = 1, null.ok = TRUE)
+      len = 1, null.ok = TRUE
+    )
     checkmate::assert_logical(config$routingDefaults$geoidElevation,
-                              len = 1, null.ok = TRUE)
+      len = 1, null.ok = TRUE
+    )
     checkmate::assert_logical(config$routingDefaults$ignoreRealtimeUpdates,
-                              len = 1, null.ok = TRUE)
+      len = 1, null.ok = TRUE
+    )
     checkmate::assert_logical(config$routingDefaults$kissAndRide,
-                              len = 1, null.ok = TRUE)
+      len = 1, null.ok = TRUE
+    )
     checkmate::assert_logical(config$routingDefaults$longDistance,
-                              len = 1, null.ok = TRUE)
-    checkmate::assert_logical(config$routingDefaults$maxTransfers,
-                              len = 1, null.ok = TRUE)
+      len = 1, null.ok = TRUE
+    )
     checkmate::assert_logical(config$routingDefaults$onlyTransitTrips,
-                              len = 1, null.ok = TRUE)
+      len = 1, null.ok = TRUE
+    )
     checkmate::assert_logical(config$routingDefaults$parkAndRide,
-                              len = 1, null.ok = TRUE)
+      len = 1, null.ok = TRUE
+    )
     checkmate::assert_logical(config$routingDefaults$reverseOptimizeOnTheFly,
-                              len = 1, null.ok = TRUE)
+      len = 1, null.ok = TRUE
+    )
     checkmate::assert_logical(config$routingDefaults$reverseOptimizing,
-                              len = 1, null.ok = TRUE)
+      len = 1, null.ok = TRUE
+    )
     checkmate::assert_logical(config$routingDefaults$showIntermediateStops,
-                              len = 1, null.ok = TRUE)
+      len = 1, null.ok = TRUE
+    )
     checkmate::assert_logical(config$routingDefaults$softPreTransitLimiting,
-                              len = 1, null.ok = TRUE)
+      len = 1, null.ok = TRUE
+    )
     checkmate::assert_logical(config$routingDefaults$softWalkLimiting,
-                              len = 1, null.ok = TRUE)
+      len = 1, null.ok = TRUE
+    )
     checkmate::assert_logical(config$routingDefaults$useBikeRentalAvailabilityInformation,
-                              len = 1, null.ok = TRUE)
+      len = 1, null.ok = TRUE
+    )
     checkmate::assert_logical(config$routingDefaults$useRequestedDateTimeInMaxHours,
-                              len = 1, null.ok = TRUE)
+      len = 1, null.ok = TRUE
+    )
     checkmate::assert_logical(config$routingDefaults$useTraffic,
-                              len = 1, null.ok = TRUE)
+      len = 1, null.ok = TRUE
+    )
     checkmate::assert_logical(config$routingDefaults$walkingBike,
-                              len = 1, null.ok = TRUE)
+      len = 1, null.ok = TRUE
+    )
     checkmate::assert_logical(config$routingDefaults$wheelchairAccessible,
-                              len = 1, null.ok = TRUE)
+      len = 1, null.ok = TRUE
+    )
 
     # Integer
     checkmate::assert_integer(config$routingDefaults$alightSlack,
-                              len = 1, null.ok = TRUE)
+      len = 1, null.ok = TRUE
+    )
     checkmate::assert_integer(config$routingDefaults$bikeBoardCost,
-                              len = 1, null.ok = TRUE)
+      len = 1, null.ok = TRUE
+    )
     checkmate::assert_integer(config$routingDefaults$bikeSwitchCost,
-                              len = 1, null.ok = TRUE)
+      len = 1, null.ok = TRUE
+    )
     checkmate::assert_integer(config$routingDefaults$bikeSwitchTime,
-                              len = 1, null.ok = TRUE, lower = 0)
+      len = 1, null.ok = TRUE, lower = 0
+    )
     checkmate::assert_integer(config$routingDefaults$carDropoffTime,
-                              len = 1, null.ok = TRUE)
+      len = 1, null.ok = TRUE
+    )
     checkmate::assert_integer(config$routingDefaults$elevatorBoardCost,
-                              len = 1, null.ok = TRUE)
+      len = 1, null.ok = TRUE
+    )
     checkmate::assert_integer(config$routingDefaults$bikeParkAndRide,
-                              len = 1, null.ok = TRUE)
+      len = 1, null.ok = TRUE
+    )
     checkmate::assert_integer(config$routingDefaults$bikeParkCost,
-                              len = 1, null.ok = TRUE)
+      len = 1, null.ok = TRUE
+    )
     checkmate::assert_integer(config$routingDefaults$bikeParkTime,
-                              len = 1, null.ok = TRUE)
+      len = 1, null.ok = TRUE
+    )
     checkmate::assert_integer(config$routingDefaults$bikeRentalDropoffCost,
-                              len = 1, null.ok = TRUE)
+      len = 1, null.ok = TRUE
+    )
     checkmate::assert_integer(config$routingDefaults$bikeRentalDropoffTime,
-                              len = 1, null.ok = TRUE)
+      len = 1, null.ok = TRUE
+    )
     checkmate::assert_integer(config$routingDefaults$bikeRentalPickupCost,
-                              len = 1, null.ok = TRUE)
+      len = 1, null.ok = TRUE
+    )
     checkmate::assert_integer(config$routingDefaults$bikeRentalPickupTime,
-                              len = 1, null.ok = TRUE)
+      len = 1, null.ok = TRUE
+    )
     checkmate::assert_integer(config$routingDefaults$bikeWalkingOptions,
-                              len = 1, null.ok = TRUE)
+      len = 1, null.ok = TRUE
+    )
     checkmate::assert_integer(config$routingDefaults$elevatorBoardTime,
-                              len = 1, null.ok = TRUE)
+      len = 1, null.ok = TRUE
+    )
     checkmate::assert_integer(config$routingDefaults$elevatorHopCost,
-                              len = 1, null.ok = TRUE)
+      len = 1, null.ok = TRUE
+    )
     checkmate::assert_integer(config$routingDefaults$elevatorHopTime,
-                              len = 1, null.ok = TRUE)
+      len = 1, null.ok = TRUE
+    )
     checkmate::assert_integer(config$routingDefaults$maxPreTransitTime,
-                              len = 1, null.ok = TRUE)
+      len = 1, null.ok = TRUE
+    )
+    checkmate::assert_integer(config$routingDefaults$maxTransfers,
+      len = 1, null.ok = TRUE
+    )
     checkmate::assert_integer(config$routingDefaults$MIN_SIMILARITY,
-                              len = 1, null.ok = TRUE)
+      len = 1, null.ok = TRUE
+    )
     checkmate::assert_integer(config$routingDefaults$nonpreferredTransferPenalty,
-                              len = 1, null.ok = TRUE)
+      len = 1, null.ok = TRUE
+    )
     checkmate::assert_integer(config$routingDefaults$numItineraries,
-                              len = 1, null.ok = TRUE, lower = 1)
+      len = 1, null.ok = TRUE, lower = 1
+    )
     checkmate::assert_integer(config$routingDefaults$otherThanPreferredRoutesPenalty,
-                              len = 1, null.ok = TRUE)
+      len = 1, null.ok = TRUE
+    )
     checkmate::assert_integer(config$routingDefaults$transferPenalty,
-                              len = 1, null.ok = TRUE)
+      len = 1, null.ok = TRUE
+    )
     checkmate::assert_integer(config$routingDefaults$transferSlack,
-                              len = 1, null.ok = TRUE)
+      len = 1, null.ok = TRUE
+    )
     checkmate::assert_integer(config$routingDefaults$useUnpreferredRoutesPenalty,
-                              len = 1, null.ok = TRUE)
+      len = 1, null.ok = TRUE
+    )
     checkmate::assert_integer(config$routingDefaults$walkBoardCost,
-                              len = 1, null.ok = TRUE)
+      len = 1, null.ok = TRUE
+    )
 
 
 
     # Character
     checkmate::assert_character(config$routingDefaults$bannedAgencies,
-                                null.ok = TRUE)
+      null.ok = TRUE
+    )
     checkmate::assert_character(config$routingDefaults$bannedRoutes,
-                                null.ok = TRUE)
+      null.ok = TRUE
+    )
     checkmate::assert_character(config$routingDefaults$bannedStops,
-                                null.ok = TRUE)
+      null.ok = TRUE
+    )
     checkmate::assert_character(config$routingDefaults$bannedStopsHard,
-                                null.ok = TRUE)
+      null.ok = TRUE
+    )
     checkmate::assert_character(config$routingDefaults$bannedTrips,
-                                null.ok = TRUE)
+      null.ok = TRUE
+    )
     checkmate::assert_character(config$routingDefaults$boardSlack,
-                                null.ok = TRUE)
+      null.ok = TRUE
+    )
     checkmate::assert_character(config$routingDefaults$preferredAgencies,
-                                null.ok = TRUE)
+      null.ok = TRUE
+    )
     checkmate::assert_character(config$routingDefaults$preferredRoutes,
-                                null.ok = TRUE)
+      null.ok = TRUE
+    )
 
     # Numeric
     checkmate::assert_numeric(config$routingDefaults$bikeSpeed,
-                              len = 1, null.ok = TRUE, lower = 0)
+      len = 1, null.ok = TRUE, lower = 0
+    )
     checkmate::assert_numeric(config$routingDefaults$carSpeed,
-                              len = 1, null.ok = TRUE, lower = 0)
+      len = 1, null.ok = TRUE, lower = 0
+    )
     checkmate::assert_numeric(config$routingDefaults$clampInitialWait,
-                              len = 1, null.ok = TRUE)
+      len = 1, null.ok = TRUE
+    )
     checkmate::assert_numeric(config$routingDefaults$carAccelerationSpeed,
-                              len = 1, null.ok = TRUE, lower = 0)
+      len = 1, null.ok = TRUE, lower = 0
+    )
     checkmate::assert_numeric(config$routingDefaults$carDecelerationSpeed,
-                              len = 1, null.ok = TRUE, lower = 0)
+      len = 1, null.ok = TRUE, lower = 0
+    )
     checkmate::assert_numeric(config$routingDefaults$maxHours,
-                              len = 1, null.ok = TRUE, lower = 0)
+      len = 1, null.ok = TRUE, lower = 0
+    )
     checkmate::assert_numeric(config$routingDefaults$maxSlope,
-                              len = 1, null.ok = TRUE, lower = 0)
+      len = 1, null.ok = TRUE, lower = 0
+    )
     checkmate::assert_numeric(config$routingDefaults$maxTransferWalkDistance,
-                              len = 1, null.ok = TRUE, lower = 0)
+      len = 1, null.ok = TRUE, lower = 0
+    )
     checkmate::assert_numeric(config$routingDefaults$maxWalkDistance,
-                              len = 1, null.ok = TRUE, lower = 0)
+      len = 1, null.ok = TRUE, lower = 0
+    )
     checkmate::assert_numeric(config$routingDefaults$maxWeight,
-                              len = 1, null.ok = TRUE)
+      len = 1, null.ok = TRUE
+    )
     checkmate::assert_numeric(config$routingDefaults$preTransitOverageRate,
-                              len = 1, null.ok = TRUE)
+      len = 1, null.ok = TRUE
+    )
     checkmate::assert_numeric(config$routingDefaults$preTransitPenalty,
-                              len = 1, null.ok = TRUE)
+      len = 1, null.ok = TRUE
+    )
     checkmate::assert_numeric(config$routingDefaults$softWalkOverageRate,
-                              len = 1, null.ok = TRUE)
+      len = 1, null.ok = TRUE
+    )
     checkmate::assert_numeric(config$routingDefaults$softWalkPenalty,
-                              len = 1, null.ok = TRUE)
+      len = 1, null.ok = TRUE
+    )
     checkmate::assert_numeric(config$routingDefaults$stairsReluctance,
-                              len = 1, null.ok = TRUE)
+      len = 1, null.ok = TRUE
+    )
     checkmate::assert_numeric(config$routingDefaults$triangleSafetyFactor,
-                              len = 1, null.ok = TRUE)
+      len = 1, null.ok = TRUE
+    )
     checkmate::assert_numeric(config$routingDefaults$triangleSlopeFactor,
-                              len = 1, null.ok = TRUE)
+      len = 1, null.ok = TRUE
+    )
     checkmate::assert_numeric(config$routingDefaults$triangleTimeFactor,
-                              len = 1, null.ok = TRUE)
+      len = 1, null.ok = TRUE
+    )
     checkmate::assert_numeric(config$routingDefaults$turnReluctance,
-                              len = 1, null.ok = TRUE)
+      len = 1, null.ok = TRUE
+    )
     checkmate::assert_numeric(config$routingDefaults$waitAtBeginningFactor,
-                              len = 1, null.ok = TRUE)
+      len = 1, null.ok = TRUE
+    )
     checkmate::assert_numeric(config$routingDefaults$waitReluctance,
-                              len = 1, null.ok = TRUE)
+      len = 1, null.ok = TRUE
+    )
     checkmate::assert_numeric(config$routingDefaults$walkReluctance,
-                              len = 1, null.ok = TRUE)
+      len = 1, null.ok = TRUE
+    )
     checkmate::assert_numeric(config$routingDefaults$walkSpeed,
-                              len = 1, null.ok = TRUE)
+      len = 1, null.ok = TRUE
+    )
 
     # Not Checked
     not_checked <- c(
@@ -277,71 +381,99 @@ otp_validate_config <- function(config, type = attributes(config)$config_type) {
       "optimize",
       "rctx"
     )
-    message(paste0("The folloing values where not checked: ",
-                   paste(not_checked, collapse = ", ")))
+    message(paste0(
+      "The folloing values where not checked: ",
+      paste(not_checked, collapse = ", ")
+    ))
   } else if (type == "build") {
     # logical
     checkmate::assert_logical(config$transit,
-                              len = 1, null.ok = TRUE)
+      len = 1, null.ok = TRUE
+    )
     checkmate::assert_logical(config$streets,
-                              len = 1, null.ok = TRUE)
+      len = 1, null.ok = TRUE
+    )
     checkmate::assert_logical(config$embedRouterConfig,
-                              len = 1, null.ok = TRUE)
+      len = 1, null.ok = TRUE
+    )
     checkmate::assert_logical(config$areaVisibility,
-                              len = 1, null.ok = TRUE)
+      len = 1, null.ok = TRUE
+    )
     checkmate::assert_logical(config$staticParkAndRide,
-                              len = 1, null.ok = TRUE)
+      len = 1, null.ok = TRUE
+    )
     checkmate::assert_logical(config$htmlAnnotations,
-                              len = 1, null.ok = TRUE)
+      len = 1, null.ok = TRUE
+    )
     checkmate::assert_logical(config$useTransfersTxt,
-                              len = 1, null.ok = TRUE)
+      len = 1, null.ok = TRUE
+    )
     checkmate::assert_logical(config$parentStopLinking,
-                              len = 1, null.ok = TRUE)
+      len = 1, null.ok = TRUE
+    )
     checkmate::assert_logical(config$stationTransfers,
-                              len = 1, null.ok = TRUE)
+      len = 1, null.ok = TRUE
+    )
     checkmate::assert_logical(config$platformEntriesLinking,
-                              len = 1, null.ok = TRUE)
+      len = 1, null.ok = TRUE
+    )
     checkmate::assert_logical(config$matchBusRoutesToStreets,
-                              len = 1, null.ok = TRUE)
+      len = 1, null.ok = TRUE
+    )
     checkmate::assert_logical(config$fetchElevationUS,
-                              len = 1, null.ok = TRUE)
+      len = 1, null.ok = TRUE
+    )
     checkmate::assert_logical(config$staticBikeRental,
-                              len = 1, null.ok = TRUE)
+      len = 1, null.ok = TRUE
+    )
     checkmate::assert_logical(config$staticBikeParkAndRide,
-                              len = 1, null.ok = TRUE)
+      len = 1, null.ok = TRUE
+    )
     checkmate::assert_logical(config$banDiscouragedWalking,
-                              len = 1, null.ok = TRUE)
+      len = 1, null.ok = TRUE
+    )
     checkmate::assert_logical(config$banDiscouragedBiking,
-                              len = 1, null.ok = TRUE)
+      len = 1, null.ok = TRUE
+    )
     checkmate::assert_logical(config$extraEdgesStopPlatformLink,
-                              len = 1, null.ok = TRUE)
+      len = 1, null.ok = TRUE
+    )
 
     # Interger
     checkmate::assert_integer(config$maxHtmlAnnotationsPerFile,
-                              len = 1, null.ok = TRUE, lower = 1)
+      len = 1, null.ok = TRUE, lower = 1
+    )
     checkmate::assert_integer(config$maxInterlineDistance,
-                              len = 1, null.ok = TRUE, lower = 1)
+      len = 1, null.ok = TRUE, lower = 1
+    )
     checkmate::assert_integer(config$islandWithStopsMaxSize,
-                              len = 1, null.ok = TRUE, lower = 1)
+      len = 1, null.ok = TRUE, lower = 1
+    )
     checkmate::assert_integer(config$islandWithoutStopsMaxSize,
-                              len = 1, null.ok = TRUE, lower = 1)
+      len = 1, null.ok = TRUE, lower = 1
+    )
 
     # Numeric
     checkmate::assert_numeric(config$elevationUnitMultiplier,
-                              len = 1, null.ok = TRUE)
+      len = 1, null.ok = TRUE
+    )
     checkmate::assert_numeric(config$subwayAccessTime,
-                              len = 1, null.ok = TRUE, lower = 0)
+      len = 1, null.ok = TRUE, lower = 0
+    )
     checkmate::assert_numeric(config$maxTransferDistance,
-                              len = 1, null.ok = TRUE,
-                              lower = 0)
+      len = 1, null.ok = TRUE,
+      lower = 0
+    )
 
     # Character
     checkmate::assert_subset(config$osmWayPropertySet,
-                             empty.ok = TRUE,
-                             choices = c("default", "norway"))
+      empty.ok = TRUE,
+      choices = c("default", "norway", "uk")
+    )
     checkmate::assert_subset(config$stopClusterMode,
-                             empty.ok = TRUE,
-                             choices = c("proximity", "parentStation"))
+      empty.ok = TRUE,
+      choices = c("proximity", "parentStation")
+    )
   } else if (type == "otp") {
     otp_validate_config(config, type = "build")
     otp_validate_config(config, type = "router")
@@ -351,8 +483,9 @@ otp_validate_config <- function(config, type = attributes(config)$config_type) {
 
 #' Make Config Object
 #' @description
-#' OTP can be configured using three json files `otp-config.json`, `build-config.json`,
-#' and `router-config.json`. This function creates a named list for each config file and
+#' OTP can be configured using three json files `otp-config.json`,
+#' `build-config.json`, and `router-config.json`. This function
+#' creates a named list for each config file and
 #' populates the defaults values.
 #'
 #' @param type Which type of config file to create, "otp", "build", "router"
@@ -361,16 +494,17 @@ otp_validate_config <- function(config, type = attributes(config)$config_type) {
 #' For more details see:
 #' http://docs.opentripplanner.org/en/latest/Configuration
 #' @examples
-#' \dontrun{
-#' conf <- otp_make_config("build")
-#' conf <- otp_make_config("router")
+#' {
+#'   conf <- otp_make_config("build")
+#'   conf <- otp_make_config("router")
 #' }
 #' @export
 
 otp_make_config <- function(type) {
   checkmate::assert_subset(type,
-                           choices = c("otp", "build", "router"),
-                           empty.ok = FALSE)
+    choices = c("otp", "build", "router"),
+    empty.ok = FALSE
+  )
 
   if (type == "otp") {
     config_router <- otp_make_config("router")
@@ -396,8 +530,10 @@ otp_make_config <- function(type) {
     names(config) <- config_names
     # Assign Default Values
     # Logical
-    config[c("transit", "streets", "embedRouterConfig",
-             "areaVisibility", "staticParkAndRide")] <- TRUE
+    config[c(
+      "transit", "streets", "embedRouterConfig",
+      "areaVisibility", "staticParkAndRide"
+    )] <- TRUE
     config[c(
       "htmlAnnotations", "useTransfersTxt", "parentStopLinking",
       "stationTransfers", "platformEntriesLinking",
@@ -537,7 +673,8 @@ otp_make_config <- function(type) {
     )
 
     routingDefaults <- rep(list(NULL),
-                           times = length(routingDefaults_names))
+      times = length(routingDefaults_names)
+    )
     names(routingDefaults) <- routingDefaults_names
     routingDefaults[["bikeSpeed"]] <- 5
     routingDefaults[["bikeSwitchCost"]] <- 0L
