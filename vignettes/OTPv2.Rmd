@@ -1,0 +1,88 @@
+---
+title: "OpenTripPlanner Version 2"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{OTPv2}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Introduction
+
+The `opentripplanner` package was originally developed to support OpenTripPlanner v1.3, and has been updated to support each subsequent release. OpenTripPlanner v2.0 is the next major release, and this vignette will document the changes within the package to support OpenTripPlanner v2.0. While most changes for v2.0 are improvements some, like the removal of the isochrone feature are not. So the package will continue to support both version 1.5 (the last v1.x) and subsequent v2.x releases. This vignette will be updated to help users select the best version for their needs.
+
+**Note** OpenTripPlanner is undergoing some significant changes at the moment with features being added and removed. To avoid constant updates to the R package we are currently targeting support at v1.5 and v2.2. Other versions may work but are not officially supported.
+
+## Major Changes from v1.5
+
+* Switch from Java 8 to Java 11/17
+* Support for Netex transit data
+* Support for SIRI transit data
+* Switch from A* routing algorithm to Range Raptor when searching transit routes
+* Removal of Isochrone, Geocode, and other analysis features
+
+## Correct version of Java
+
+Different versions of OpenTripPlanner require different version of Java
+
+* OTP 1.x  - Java 8
+* OTP 2.0 & 2.1  - Java 11
+* OTP 2.2 - Java 17
+
+It is possible to install multiple version of Java on the same computer:
+
+**Download Links**
+
+* [Java 8](https://www.java.com/en/download/)
+* [Java 11](https://www.oracle.com/uk/java/technologies/javase/jdk11-archive-downloads.html)
+* [Java 17](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)
+
+If you have multiple version of Java installed you will also need to change the PATH variable to point to the correct version of Java. You can check your current default version of Java in the terminal using
+
+```{bash, eval = FALSE}
+java -version
+```
+
+
+## Checking your Java version
+
+You can check the version of Java accessible to R by using `otp_check_java` and specifying the version of OTP you want to use.
+
+For example if you wanted to use OTP 2.0 but have Java 8 installed then you would see:
+
+```{r, eval = FALSE}
+otp_check_java(2)
+[1] FALSE
+Warning message:
+In otp_check_java(2) : You have OTP 2.0 or 2.1 but the version of Java for OTP 1.x
+
+```
+
+## Building a graph and starting up OTP 2.2
+
+You can select OTP 2.2 using the `otp_dl_jar` function.
+
+
+```{r setup, eval=FALSE}
+library(opentripplanner)
+# Path to a folder containing the OTP.jar file, change to where you saved the file.
+path_data <- file.path(tempdir(), "OTP")
+dir.create(path_data)
+path_otp <- otp_dl_jar(version = "2.2.0")
+otp_dl_demo(path_data)
+# Build Graph and start OTP
+log1 <- otp_build_graph(otp = path_otp, dir = path_data)
+log2 <- otp_setup(otp = path_otp, dir = path_data)
+otpcon <- otp_connect(timezone = "Europe/London")
+```
+We can download the demo data and build a graph in the usual way.
+
+
+

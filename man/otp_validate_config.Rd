@@ -4,19 +4,21 @@
 \alias{otp_validate_config}
 \title{Validate Config Object}
 \usage{
-otp_validate_config(config, type = attributes(config)$config_type)
+otp_validate_config(config, type = attributes(config)$config_type, version = 1)
 }
 \arguments{
 \item{config}{A named list made/modified from `otp_make_config()`}
 
 \item{type}{type of config file}
+
+\item{version}{version of OPT e.g. 1 or 2}
 }
 \description{
 Checks if the list of OTP configuration options is valid
 }
 \details{
-Performs basic validity checks on class, max/min values etc as appropriate, some of
-more complex parameters are not checked. For more details see:
+Performs basic validity checks on class, max/min values etc as appropriate,
+some of more complex parameters are not checked. For more details see:
 
 http://docs.opentripplanner.org/en/latest/Configuration
 http://dev.opentripplanner.org/javadoc/1.3.0/org/opentripplanner/routing/core/RoutingRequest.html
@@ -28,8 +30,15 @@ otp_validate_config(conf)
 }
 }
 \seealso{
-Other setup: \code{\link{otp_build_graph}},
-  \code{\link{otp_make_config}}, \code{\link{otp_setup}},
-  \code{\link{otp_stop}}, \code{\link{otp_write_config}}
+Other setup: 
+\code{\link{otp_build_graph}()},
+\code{\link{otp_check_java}()},
+\code{\link{otp_check_version}()},
+\code{\link{otp_dl_demo}()},
+\code{\link{otp_dl_jar}()},
+\code{\link{otp_make_config}()},
+\code{\link{otp_setup}()},
+\code{\link{otp_stop}()},
+\code{\link{otp_write_config}()}
 }
 \concept{setup}
